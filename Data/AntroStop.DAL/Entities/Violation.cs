@@ -18,7 +18,5 @@ namespace AntroStop.DAL.Entities
         public string Email { get; set; }
         public string Status { get; set; }
         public string Answer { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
-        public DateTimeOffset UpdatedAt { get; set; }
     }
 }
