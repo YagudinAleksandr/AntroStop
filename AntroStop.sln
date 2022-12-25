@@ -13,25 +13,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{6CBF18F8-0DBC-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{444DF10F-12D4-4C5C-ABB4-790D4CE62009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.DAL", "Data\AntroStop.DAL\AntroStop.DAL.csproj", "{B61504E7-5A51-44CC-AABD-D57EED2A9A9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.DAL", "Data\AntroStop.DAL\AntroStop.DAL.csproj", "{B61504E7-5A51-44CC-AABD-D57EED2A9A9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.DAL.SqlServer", "Data\AntroStop.DAL.SqlServer\AntroStop.DAL.SqlServer.csproj", "{637FE908-9DC1-455B-965A-0848A9D5FA1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.DAL.SqlServer", "Data\AntroStop.DAL.SqlServer\AntroStop.DAL.SqlServer.csproj", "{637FE908-9DC1-455B-965A-0848A9D5FA1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.Interfaces", "Services\AntroStop.Interfaces\AntroStop.Interfaces.csproj", "{FDED35F9-1414-4B27-94C6-F0952222B2FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.Interfaces", "Services\AntroStop.Interfaces\AntroStop.Interfaces.csproj", "{FDED35F9-1414-4B27-94C6-F0952222B2FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.Interfaces.Base", "Services\AntroStop.Interfaces.Base\AntroStop.Interfaces.Base.csproj", "{C7645DB9-148C-481B-A219-B3A12D10D45C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.Interfaces.Base", "Services\AntroStop.Interfaces.Base\AntroStop.Interfaces.Base.csproj", "{C7645DB9-148C-481B-A219-B3A12D10D45C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.WebAPIClients", "Services\AntroStop.WebAPIClients\AntroStop.WebAPIClients.csproj", "{39AE7658-B027-4FA6-AC65-088E2F14AD67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.WebAPIClients", "Services\AntroStop.WebAPIClients\AntroStop.WebAPIClients.csproj", "{39AE7658-B027-4FA6-AC65-088E2F14AD67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.WebAPI", "Services\AntroStop.WebAPI\AntroStop.WebAPI.csproj", "{6BC7E4D0-BD60-47DC-A7A6-F3745CC40D43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.WebAPI", "Services\AntroStop.WebAPI\AntroStop.WebAPI.csproj", "{6BC7E4D0-BD60-47DC-A7A6-F3745CC40D43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStrop.MauiUI", "UI\AntroStrop.MauiUI\AntroStrop.MauiUI.csproj", "{EAF1B4BC-8ADB-4744-A0F2-26C948BDDD71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.BlazorUI", "UI\AntroStop.BlazorUI\AntroStop.BlazorUI.csproj", "{36CA313A-78CF-422E-B3FF-FCF5E9A9FE26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.BlazorUI", "UI\AntroStop.BlazorUI\AntroStop.BlazorUI.csproj", "{36CA313A-78CF-422E-B3FF-FCF5E9A9FE26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.Domain", "Common\AntroStop.Domain\AntroStop.Domain.csproj", "{37C92E5A-5FF3-47C6-8F40-8B3A19513513}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.Domain", "Common\AntroStop.Domain\AntroStop.Domain.csproj", "{37C92E5A-5FF3-47C6-8F40-8B3A19513513}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.Domain.Base", "Common\AntroStop.Domain.Base\AntroStop.Domain.Base.csproj", "{41639391-5F69-4E09-8EC2-FC7FA72ADABC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.Domain.Base", "Common\AntroStop.Domain.Base\AntroStop.Domain.Base.csproj", "{41639391-5F69-4E09-8EC2-FC7FA72ADABC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,12 +61,6 @@ Global
 		{6BC7E4D0-BD60-47DC-A7A6-F3745CC40D43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BC7E4D0-BD60-47DC-A7A6-F3745CC40D43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BC7E4D0-BD60-47DC-A7A6-F3745CC40D43}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EAF1B4BC-8ADB-4744-A0F2-26C948BDDD71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EAF1B4BC-8ADB-4744-A0F2-26C948BDDD71}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EAF1B4BC-8ADB-4744-A0F2-26C948BDDD71}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{EAF1B4BC-8ADB-4744-A0F2-26C948BDDD71}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EAF1B4BC-8ADB-4744-A0F2-26C948BDDD71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EAF1B4BC-8ADB-4744-A0F2-26C948BDDD71}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{36CA313A-78CF-422E-B3FF-FCF5E9A9FE26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{36CA313A-78CF-422E-B3FF-FCF5E9A9FE26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36CA313A-78CF-422E-B3FF-FCF5E9A9FE26}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -92,7 +84,6 @@ Global
 		{C7645DB9-148C-481B-A219-B3A12D10D45C} = {ECBF6A17-99EE-4B4A-B2E6-7E8709210043}
 		{39AE7658-B027-4FA6-AC65-088E2F14AD67} = {ECBF6A17-99EE-4B4A-B2E6-7E8709210043}
 		{6BC7E4D0-BD60-47DC-A7A6-F3745CC40D43} = {ECBF6A17-99EE-4B4A-B2E6-7E8709210043}
-		{EAF1B4BC-8ADB-4744-A0F2-26C948BDDD71} = {6CBF18F8-0DBC-440F-9424-B52D86DBCACF}
 		{36CA313A-78CF-422E-B3FF-FCF5E9A9FE26} = {6CBF18F8-0DBC-440F-9424-B52D86DBCACF}
 		{37C92E5A-5FF3-47C6-8F40-8B3A19513513} = {AD2F4394-80FF-474C-80A6-8993613B18D6}
 		{41639391-5F69-4E09-8EC2-FC7FA72ADABC} = {AD2F4394-80FF-474C-80A6-8993613B18D6}
