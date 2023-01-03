@@ -9,6 +9,10 @@
     <ProjectReference Include="..\AntroStop.Interfaces.Base\AntroStop.Interfaces.Base.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\" />
+  </ItemGroup>
+
   
 
 </Project>

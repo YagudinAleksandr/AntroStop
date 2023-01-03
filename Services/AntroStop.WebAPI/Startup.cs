@@ -1,6 +1,11 @@
+using AntroStop.DAL.Context;
+using AntroStop.DAL.Repositories;
+using AntroStop.Interfaces.Base.Repositories;
+using AntroStop.Interfaces.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,23 +18,22 @@ using System.Threading.Tasks;
 
 namespace AntroStop.WebAPI
 {
-    public class Startup
+    public record Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataDB>(opt => opt.UseSqlServer(configuration.GetConnectionString("Data"), m => m.MigrationsAssembly("AntroStop.DAL.SqlServer")));//Добавление SQL Server
+
+            services.AddScoped(typeof(IGuidRepository<>), typeof(ViolationRepository<>));
+            services.AddScoped(typeof(IElemetAdditionalRepository<>), typeof(ElementRepository<>));
+
+            //services.AddTransient<DataDBInitializer>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AntroStop.WebAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AntroStop.API", Version = "v1" });
             });
         }
 

@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.Domain", "Common\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.Domain.Base", "Common\AntroStop.Domain.Base\AntroStop.Domain.Base.csproj", "{41639391-5F69-4E09-8EC2-FC7FA72ADABC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStrop.MauiUI", "UI\AntroStrop.MauiUI\AntroStrop.MauiUI.csproj", "{AA7715AB-2A45-446B-9618-0C1737DBBD81}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,11 @@ Global
 		{41639391-5F69-4E09-8EC2-FC7FA72ADABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41639391-5F69-4E09-8EC2-FC7FA72ADABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41639391-5F69-4E09-8EC2-FC7FA72ADABC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA7715AB-2A45-446B-9618-0C1737DBBD81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA7715AB-2A45-446B-9618-0C1737DBBD81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA7715AB-2A45-446B-9618-0C1737DBBD81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA7715AB-2A45-446B-9618-0C1737DBBD81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA7715AB-2A45-446B-9618-0C1737DBBD81}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +94,7 @@ Global
 		{36CA313A-78CF-422E-B3FF-FCF5E9A9FE26} = {6CBF18F8-0DBC-440F-9424-B52D86DBCACF}
 		{37C92E5A-5FF3-47C6-8F40-8B3A19513513} = {AD2F4394-80FF-474C-80A6-8993613B18D6}
 		{41639391-5F69-4E09-8EC2-FC7FA72ADABC} = {AD2F4394-80FF-474C-80A6-8993613B18D6}
+		{AA7715AB-2A45-446B-9618-0C1737DBBD81} = {6CBF18F8-0DBC-440F-9424-B52D86DBCACF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F7FB11-1E47-470C-91E2-47F8143E1572}

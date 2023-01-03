@@ -1,6 +1,7 @@
 ﻿using AntroStop.DAL.Context;
 using AntroStop.DAL.Entities;
 using AntroStop.Interfaces.Base.Repositories;
+using AntroStop.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AntroStop.DAL.Repositories
 {
-    public class ElementRepository<T> : IGuidRepository<T> where T : Element, new()
+    public class ElementRepository<T> : IElemetAdditionalRepository<T> where T : Element, new()
     {
         #region Поля и Свойства
         private readonly DataDB db;
@@ -107,6 +108,7 @@ namespace AntroStop.DAL.Repositories
             return await Items.ToArrayAsync(Cancel).ConfigureAwait(false);
         }
 
+
         /// <summary>
         /// Производит обновление нарушений
         /// </summary>
@@ -123,6 +125,11 @@ namespace AntroStop.DAL.Repositories
             await db.SaveChangesAsync(Cancel).ConfigureAwait(false);
 
             return entity;
+        }
+
+        public async Task<IEnumerable<T>> GetAllByID(Guid Id, CancellationToken Cancel = default)
+        {
+            return await Items.Where(violation => violation.Violation.Id == Id).ToArrayAsync(Cancel).ConfigureAwait(false);
         }
         #endregion
     }
