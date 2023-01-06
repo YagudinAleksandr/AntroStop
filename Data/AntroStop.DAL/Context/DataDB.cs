@@ -5,9 +5,13 @@ namespace AntroStop.DAL.Context
 {
     public class DataDB : DbContext
     {
+        public DbSet<User> Users { get; set; }
+
         public DbSet<Violation> Violations { get; set; }
         public DbSet<Element> Elements { get; set; }
+
         public DataDB(DbContextOptions<DataDB> options) : base(options) { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
