@@ -10,6 +10,5 @@ namespace AntroStop.DAL.Entities
         public string Url { get; set; }
         public string Type { get; set; }
         public Violation Violation { get; set; }
-        
     }
 }

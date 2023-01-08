@@ -14,8 +14,7 @@ namespace AntroStop.DAL.Entities
         public string Description { get; set; }
         [Required]
         public string Coordinates { get; set; }
-        [Required]
-        public string Email { get; set; }
+        public User User { get; set; }
         public string Status { get; set; }
         public string Answer { get; set; }
     }

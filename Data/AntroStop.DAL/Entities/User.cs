@@ -4,12 +4,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AntroStop.DAL.Entities
 {
-    [Index(nameof(Username))]
+    [Index(nameof(ID))]
     public class User : StringEntity
     {
         [Required]
         public string Password { get; set; }
         [Required]
-        public int RoleID { get; set; }
+        public string Name { get; set; }
+        public Role Role{ get; set; }
+        public bool Status { get; set; }
     }
 }
