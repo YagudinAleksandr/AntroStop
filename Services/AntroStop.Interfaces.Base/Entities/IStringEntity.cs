@@ -1,7 +1,11 @@
-﻿namespace AntroStop.Interfaces.Base.Entities
+﻿using System;
+
+namespace AntroStop.Interfaces.Base.Entities
 {
     public interface IStringEntity
     {
-        string Username { get; set; }
+        string ID { get; set; }
+        DateTimeOffset CreatedAt { get; set; }
+        DateTimeOffset UpdatedAt { get; set; }
     }
 }
