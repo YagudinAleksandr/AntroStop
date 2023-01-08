@@ -1,5 +1,7 @@
-﻿using AntroStop.DAL.Entities;
+﻿using AntroStop.DAL.Context;
+using AntroStop.DAL.Entities;
 using AntroStop.Interfaces.Base.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,39 +12,78 @@ namespace AntroStop.DAL.Repositories
 {
     public class UserRepository<T> : IStringRepository<T> where T : User, new()
     {
-        public Task<T> Add(T entity, CancellationToken Cancel = default)
+        #region Свойства
+        private readonly DataDB db;
+        protected DbSet<T> Set { get; }
+        protected virtual IQueryable<T> Items => Set;
+        #endregion
+        public UserRepository(DataDB db) 
         {
-            throw new NotImplementedException();
+            this.db = db;
+            this.Set = this.db.Set<T>();
+        }
+        #region Методы
+        public async Task<bool> ExistID(string ID, CancellationToken Cancel = default)
+        {
+            return await Items.AnyAsync(item => item.ID == ID, Cancel).ConfigureAwait(false);
         }
 
-        public Task<int> Count(CancellationToken Cancel = default)
+        public async Task<int> Count(CancellationToken Cancel = default)
         {
-            throw new NotImplementedException();
+            return await Items.CountAsync(Cancel).ConfigureAwait(false);
         }
 
-        public Task<T> Delete(int ID, CancellationToken Cancel = default)
+        public async Task<IEnumerable<T>> GetAll(CancellationToken Cancel = default)
         {
-            throw new NotImplementedException();
+            return await Items.ToArrayAsync(Cancel).ConfigureAwait(false);
         }
 
-        public Task<bool> ExistID(string Username, CancellationToken Cancel = default)
+        public async Task<T> Add(T entity, CancellationToken Cancel = default)
         {
-            throw new NotImplementedException();
+            if (entity == null) throw new ArgumentNullException();
+
+            await db.AddAsync(entity, Cancel).ConfigureAwait(false);
+
+            await db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+
+            return entity;
         }
 
-        public Task<T> Get(int ID, CancellationToken Cancel = default)
+        public async Task<T> Update(T entity, CancellationToken Cancel = default)
         {
-            throw new NotImplementedException();
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
+
+            db.Entry(entity).State = EntityState.Modified;
+
+            await db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+
+            return entity;
         }
 
-        public Task<IEnumerable<T>> GetAll(CancellationToken Cancel = default)
+        public async Task<T> Delete(string ID, CancellationToken Cancel = default)
         {
-            throw new NotImplementedException();
+            var item = Set.Local.FirstOrDefault(x => x.ID == ID);
+
+            if (item == null)
+                item = await Set.Select(i => new T { ID = i.ID })
+                    .FirstOrDefaultAsync(x => x.ID == ID, Cancel)
+                    .ConfigureAwait(false);
+
+            if (item is null) return null;
+
+            db.Entry(item).State = EntityState.Deleted;
+
+            await db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+
+            return item;
         }
 
-        public Task<T> Update(T entity, CancellationToken Cancel = default)
+        public async Task<T> Get(string ID, CancellationToken Cancel = default)
         {
-            throw new NotImplementedException();
+            return await Items.FirstOrDefaultAsync(item => item.ID == ID, Cancel).ConfigureAwait(false);
         }
+        
+
+        #endregion
     }
 }
