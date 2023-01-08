@@ -9,8 +9,8 @@ namespace AntroStop.DAL.Entities.Base
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public string Username { get; set; }
+        public string ID { get; set; }
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
-        public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset UpdatedAt { get; set; }
     }
 }

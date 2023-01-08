@@ -11,6 +11,6 @@ namespace AntroStop.DAL.Entities.Base
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
-        public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.Now;
+        public DateTimeOffset UpdatedAt { get; set; }
     }
 }
