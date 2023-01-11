@@ -35,7 +35,7 @@ namespace AntroStop.DAL.Repositories
 
         public async Task<IEnumerable<T>> GetAll(CancellationToken Cancel = default)
         {
-            return await Items.ToArrayAsync(Cancel).ConfigureAwait(false);
+            return await Items.Include(r=>r.Role).ToArrayAsync(Cancel).ConfigureAwait(false);
         }
 
         public async Task<T> Add(T entity, CancellationToken Cancel = default)
@@ -80,7 +80,7 @@ namespace AntroStop.DAL.Repositories
 
         public async Task<T> Get(string ID, CancellationToken Cancel = default)
         {
-            return await Items.FirstOrDefaultAsync(item => item.ID == ID, Cancel).ConfigureAwait(false);
+            return await Items.Include(r=>r.Role).FirstOrDefaultAsync(item => item.ID == ID, Cancel).ConfigureAwait(false);
         }
         
 
