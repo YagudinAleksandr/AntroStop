@@ -8,8 +8,9 @@ namespace AntroStop.DAL.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Organization> Organizations { get; set; }
-        public DbSet<OrganizationUser> OrganizationUsers { get; set; }
+        
+        //public DbSet<Organization> Organizations { get; set; }
+        //public DbSet<OrganizationUser> OrganizationUsers { get; set; }
 
         public DbSet<Violation> Violations { get; set; }
         public DbSet<Element> Elements { get; set; }
@@ -20,9 +21,23 @@ namespace AntroStop.DAL.Context
         {
             base.OnModelCreating(modelBuilder);
             
+            /*
             modelBuilder.Entity<Organization>()
                 .HasIndex(p => new { p.Msrn, p.Itn })
-                .IsUnique(true);
+                .IsUnique(true);*/
+
+            modelBuilder.Entity<Role>()
+                .HasMany<User>()
+                .WithOne(r => r.Role)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<User>()
+                .HasIndex(i => i.ID)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasMany<Violation>()
+                .WithOne(r => r.User)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Violation>()
                 .HasMany<Element>()
