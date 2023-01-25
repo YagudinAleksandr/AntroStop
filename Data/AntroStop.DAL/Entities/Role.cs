@@ -1,13 +1,13 @@
 ﻿using AntroStop.DAL.Entities.Base;
-using Microsoft.EntityFrameworkCore;
-using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace AntroStop.DAL.Entities
 {
-    [Index(nameof(ID))]
     public class Role : IntEntity
     {
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
     }
 }

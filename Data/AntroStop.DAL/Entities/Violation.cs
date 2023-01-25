@@ -1,11 +1,9 @@
 ﻿using AntroStop.DAL.Entities.Base;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AntroStop.DAL.Entities
 {
-    [Index(nameof(Id))]
     public class Violation : GuidEntity
     {
         [Required]
@@ -14,6 +12,8 @@ namespace AntroStop.DAL.Entities
         public string Description { get; set; }
         [Required]
         public string Coordinates { get; set; }
+        [ForeignKey("User")]
+        public string UserID { get; set; }
         public User User { get; set; }
         public string Status { get; set; }
         public string Answer { get; set; }
