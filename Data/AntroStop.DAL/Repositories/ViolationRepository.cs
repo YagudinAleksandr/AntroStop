@@ -1,6 +1,6 @@
 ﻿using AntroStop.DAL.Context;
 using AntroStop.DAL.Entities;
-using AntroStop.Interfaces.Base.Repositories;
+using AntroStop.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,22 +10,32 @@ using System.Threading.Tasks;
 
 namespace AntroStop.DAL.Repositories
 {
-    public class ViolationRepository<T> : IGuidRepository<T> where T : Violation, new()
+    public class ViolationRepository<T> : IViolationRepository<T> where T : Violation, new()
     {
-        #region Поля и Свойства
+        #region Свойства
         private readonly DataDB db;
         protected DbSet<T> Set { get; }
         protected virtual IQueryable<T> Items => Set;
         #endregion
+
         public ViolationRepository(DataDB db)
         {
             this.db = db;
             this.Set = this.db.Set<T>();
         }
+
         #region Методы
+
         public async Task<T> Add(T entity, CancellationToken Cancel = default)
         {
-            if (entity == null) throw new ArgumentNullException();
+            if (entity == null || entity.UserID == string.Empty) throw new ArgumentNullException();
+
+            var user = db.Users.Where(i => i.ID == entity.UserID).FirstOrDefault();
+
+            if (user == null) throw new ArgumentNullException();
+
+            entity.User = user;
+            entity.Id = Guid.Empty;
 
             await db.AddAsync(entity, Cancel).ConfigureAwait(false);
 
@@ -64,12 +74,27 @@ namespace AntroStop.DAL.Repositories
 
         public async Task<T> Get(Guid ID, CancellationToken Cancel = default)
         {
-            return await Items.FirstOrDefaultAsync(item => item.Id == ID, Cancel).ConfigureAwait(false);
+            return await Items.Include(u => u.User).FirstOrDefaultAsync(item => item.Id == ID, Cancel).ConfigureAwait(false);
+        }
+
+        public Task<IEnumerable<T>> Get(int skip, int count, CancellationToken Cancel = default)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<T>> GetAll(CancellationToken Cancel = default)
         {
-            return await Items.ToArrayAsync(Cancel).ConfigureAwait(false);
+            return await Items.Include(u => u.User).ToArrayAsync(Cancel).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<T>> GetAllByID(string Id, CancellationToken Cancel = default)
+        {
+            return await Items.Where(x => x.UserID == Id).Include(u => u.User).ToArrayAsync(Cancel).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<T>> GetAllByStatus(string Status, CancellationToken Cancel = default)
+        {
+            return await Items.Where(s => s.Status == Status).Include(u => u.User).ToArrayAsync(Cancel).ConfigureAwait(false);
         }
 
         public async Task<T> Update(T entity, CancellationToken Cancel = default)
@@ -82,6 +107,7 @@ namespace AntroStop.DAL.Repositories
 
             return entity;
         }
+
         #endregion
     }
 }

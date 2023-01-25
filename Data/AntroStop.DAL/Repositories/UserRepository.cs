@@ -1,5 +1,7 @@
 ﻿using AntroStop.DAL.Context;
 using AntroStop.DAL.Entities;
+using AntroStop.DAL.Entities.Base;
+using AntroStop.Interfaces.Base.Entities;
 using AntroStop.Interfaces.Base.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -40,7 +42,13 @@ namespace AntroStop.DAL.Repositories
 
         public async Task<T> Add(T entity, CancellationToken Cancel = default)
         {
-            if (entity == null) throw new ArgumentNullException();
+            if (entity == null || entity.RoleID == 0) throw new ArgumentNullException();
+
+            var role = db.Roles.Where(i => i.ID == entity.RoleID).FirstOrDefault();
+
+            if (role == null) throw new ArgumentNullException();
+
+            entity.Role = role;
 
             await db.AddAsync(entity, Cancel).ConfigureAwait(false);
 
@@ -82,8 +90,21 @@ namespace AntroStop.DAL.Repositories
         {
             return await Items.Include(r=>r.Role).FirstOrDefaultAsync(item => item.ID == ID, Cancel).ConfigureAwait(false);
         }
-        
 
+        public async Task<IEnumerable<T>> Get(int skip, int count, CancellationToken Cancel = default)
+        {
+            if (count <= 0) return Enumerable.Empty<T>();
+
+            IQueryable<T> query = Items switch
+            {
+                IOrderedQueryable<T> ordered_query => ordered_query,
+                { } q => q.OrderBy(i => i.ID)
+            };
+
+            if (skip > 0) query = query.Skip(skip);
+
+            return await query.Take(count).ToArrayAsync(Cancel).ConfigureAwait(false);
+        }
         #endregion
     }
 }
