@@ -15,5 +15,6 @@ namespace AntroStop.Interfaces.Base.Repositories
         Task<T> Update(T entity, CancellationToken Cancel = default);
         Task<T> Delete(Guid ID, CancellationToken Cancel = default);
         Task<T> Get(Guid ID, CancellationToken Cancel = default);
+        Task<IEnumerable<T>> Get(int skip, int count, CancellationToken Cancel = default);
     }
 }

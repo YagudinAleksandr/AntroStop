@@ -2,6 +2,7 @@ using AntroStop.DAL.Context;
 using AntroStop.DAL.Repositories;
 using AntroStop.Interfaces.Base.Repositories;
 using AntroStop.Interfaces.Repositories;
+using AntroStop.WebAPI.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -23,12 +24,17 @@ namespace AntroStop.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Db Connection
             services.AddDbContext<DataDB>(opt => opt.UseSqlServer(configuration.GetConnectionString("Data"), m => m.MigrationsAssembly("AntroStop.DAL.SqlServer")));//Добавление SQL Server
 
-            services.AddScoped(typeof(IGuidRepository<>), typeof(ViolationRepository<>));
-            services.AddScoped(typeof(IElemetAdditionalRepository<>), typeof(ElementRepository<>));
+            //Add repositories
+            services.AddScoped(typeof(IIntRepository<>), typeof(RoleRepository<>));
+            services.AddScoped(typeof(IStringRepository<>), typeof(UserRepository<>));
 
-            //services.AddTransient<DataDBInitializer>();
+            services.AddScoped(typeof(IViolationRepository<>), typeof(ViolationRepository<>));
+
+            //Add service to initialize DB
+            services.AddTransient<DataDBInitializer>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -38,8 +44,11 @@ namespace AntroStop.WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataDBInitializer db)
         {
+            //Initialize DB
+            db.Initialize();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
