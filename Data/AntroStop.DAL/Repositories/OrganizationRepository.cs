@@ -1,6 +1,7 @@
 ﻿using AntroStop.DAL.Context;
 using AntroStop.DAL.Entities;
 using AntroStop.Interfaces.Base.Repositories;
+using AntroStop.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,43 +11,24 @@ using System.Threading.Tasks;
 
 namespace AntroStop.DAL.Repositories
 {
-    public class UserRepository<T> : IStringRepository<T> where T : User, new()
+    public class OrganizationRepository<T> : IOrganizationRepository<T> where T : Organization, new()
     {
         #region Свойства
         private readonly DataDB db;
         protected DbSet<T> Set { get; }
         protected virtual IQueryable<T> Items => Set;
         #endregion
-        public UserRepository(DataDB db) 
+
+        public OrganizationRepository(DataDB db)
         {
             this.db = db;
             this.Set = this.db.Set<T>();
         }
+
         #region Методы
-        public async Task<bool> ExistID(string ID, CancellationToken Cancel = default)
-        {
-            return await Items.AnyAsync(item => item.ID == ID, Cancel).ConfigureAwait(false);
-        }
-
-        public async Task<int> Count(CancellationToken Cancel = default)
-        {
-            return await Items.CountAsync(Cancel).ConfigureAwait(false);
-        }
-
-        public async Task<IEnumerable<T>> GetAll(CancellationToken Cancel = default)
-        {
-            return await Items.Include(r=>r.Role).ToArrayAsync(Cancel).ConfigureAwait(false);
-        }
-
         public async Task<T> Add(T entity, CancellationToken Cancel = default)
         {
-            if (entity == null || entity.RoleID == 0) throw new ArgumentNullException();
-
-            var role = db.Roles.Where(i => i.ID == entity.RoleID).FirstOrDefault();
-
-            if (role == null) throw new ArgumentNullException();
-
-            entity.Role = role;
+            if (entity == null) throw new ArgumentNullException();
 
             await db.AddAsync(entity, Cancel).ConfigureAwait(false);
 
@@ -55,21 +37,12 @@ namespace AntroStop.DAL.Repositories
             return entity;
         }
 
-        public async Task<T> Update(T entity, CancellationToken Cancel = default)
+        public async Task<int> Count(CancellationToken Cancel = default)
         {
-            if (entity is null) throw new ArgumentNullException(nameof(entity));
-
-            entity.UpdatedAt = DateTime.UtcNow;
-            entity.Role = null;
-
-            db.Entry(entity).State = EntityState.Modified;
-
-            await db.SaveChangesAsync(Cancel).ConfigureAwait(false);
-
-            return entity;
+            return await Items.CountAsync(Cancel).ConfigureAwait(false);
         }
 
-        public async Task<T> Delete(string ID, CancellationToken Cancel = default)
+        public async Task<T> Delete(int ID, CancellationToken Cancel = default)
         {
             var item = Set.Local.FirstOrDefault(x => x.ID == ID);
 
@@ -87,24 +60,32 @@ namespace AntroStop.DAL.Repositories
             return item;
         }
 
-        public async Task<T> Get(string ID, CancellationToken Cancel = default)
+        public async Task<bool> ExistID(int ID, CancellationToken Cancel = default)
         {
-            return await Items.Include(r=>r.Role).FirstOrDefaultAsync(item => item.ID == ID, Cancel).ConfigureAwait(false);
+            return await Items.AnyAsync(item => item.ID == ID, Cancel).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<T>> Get(int skip, int count, CancellationToken Cancel = default)
+        public async Task<T> Get(int ID, CancellationToken Cancel = default)
         {
-            if (count <= 0) return Enumerable.Empty<T>();
+            return await Items.FirstOrDefaultAsync(item => item.ID == ID, Cancel).ConfigureAwait(false);
+        }
 
-            IQueryable<T> query = Items switch
-            {
-                IOrderedQueryable<T> ordered_query => ordered_query,
-                { } q => q.OrderBy(i => i.ID)
-            };
+        public async Task<IEnumerable<T>> GetAll(CancellationToken Cancel = default)
+        {
+            return await Items.ToArrayAsync(Cancel).ConfigureAwait(false);
+        }
 
-            if (skip > 0) query = query.Skip(skip);
+        public async Task<T> Update(T entity, CancellationToken Cancel = default)
+        {
+            if (entity is null) throw new ArgumentNullException(nameof(entity));
 
-            return await query.Take(count).ToArrayAsync(Cancel).ConfigureAwait(false);
+            entity.UpdatedAt = DateTime.UtcNow;
+
+            db.Entry(entity).State = EntityState.Modified;
+
+            await db.SaveChangesAsync(Cancel).ConfigureAwait(false);
+
+            return entity;
         }
 
         public async Task<IPaget<T>> GetPage(int PageIndex, int PageSize, CancellationToken Cancel = default)

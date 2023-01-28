@@ -74,6 +74,31 @@ namespace AntroStop.DAL.Repositories
             return await Items.ToArrayAsync(Cancel).ConfigureAwait(false);
         }
 
+        public async Task<IPaget<T>> GetPage(int PageIndex, int PageSize, CancellationToken Cancel = default)
+        {
+            if (PageSize <= 0)
+                return new Page(Enumerable.Empty<T>(), PageSize, PageIndex, PageSize);
+
+            var query = Items;
+
+            var totalCount = await query.CountAsync(Cancel).ConfigureAwait(false);
+
+            if (totalCount == 0)
+                return new Page(Enumerable.Empty<T>(), 0, PageIndex, PageSize);
+
+            if (query is not IOrderedQueryable<T>)
+                query = query.OrderBy(item => item.ID);
+
+            if (PageIndex > 0)
+                query = query.Skip(PageIndex * PageSize);
+
+            query = query.Take(PageSize);
+
+            var items = await query.ToArrayAsync(Cancel).ConfigureAwait(false);
+
+            return new Page(items, totalCount, PageIndex, PageSize);
+        }
+
         public async Task<T> Update(T entity, CancellationToken Cancel = default)
         {
             if (entity is null) throw new ArgumentNullException(nameof(entity));
@@ -85,6 +110,14 @@ namespace AntroStop.DAL.Repositories
             await db.SaveChangesAsync(Cancel).ConfigureAwait(false);
 
             return entity;
+        }
+
+        #endregion
+
+        #region Page class
+        protected record Page(IEnumerable<T> Items, int TotalCount, int PageIndex, int PageSize) : IPaget<T>
+        {
+            public int TotalPagesCount => (int)Math.Ceiling((double)TotalCount / PageSize);
         }
         #endregion
     }
