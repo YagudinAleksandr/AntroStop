@@ -49,9 +49,24 @@ namespace AntroStop.WebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //Подключение к браузеру для отладки Blazor
+                app.UseWebAssemblyDebugging();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AntroStop.WebAPI v1"));
             }
+
+            #region Blazor
+
+            //Подключение Blazor
+            app.UseBlazorFrameworkFiles();
+
+            //Подключение статических файлов
+            app.UseStaticFiles();
+
+            #endregion
+
+            //Подключить в случае обработки https
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -60,6 +75,9 @@ namespace AntroStop.WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                //Если не удалось расшифровать контроллер или маршрут, будет перенаправлено на файл index.html (Blazor)
+                endpoints.MapFallbackToFile("index.html");
             });
         }
     }
