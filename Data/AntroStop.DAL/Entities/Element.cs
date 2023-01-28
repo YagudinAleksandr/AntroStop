@@ -8,7 +8,7 @@ namespace AntroStop.DAL.Entities
     public class Element : GuidEntity
     {
         [Required]
-        public string Url { get; set; }
+        public string FileName { get; set; }
         [Required]
         public string Type { get; set; }
         [ForeignKey("Violation")]
