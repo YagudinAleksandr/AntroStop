@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AntroStop.DAL.SqlServer.Migrations
 {
     [DbContext(typeof(DataDB))]
-    [Migration("20230125184155_Init")]
+    [Migration("20230128140018_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,16 +30,16 @@ namespace AntroStop.DAL.SqlServer.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ViolationID")
                         .HasColumnType("uniqueidentifier");
@@ -49,6 +49,74 @@ namespace AntroStop.DAL.SqlServer.Migrations
                     b.HasIndex("ViolationID");
 
                     b.ToTable("Elements");
+                });
+
+            modelBuilder.Entity("AntroStop.DAL.Entities.Organization", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("Itn")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Msrn")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OrganizationName")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ID");
+
+                    b.HasIndex("Msrn", "Itn")
+                        .IsUnique();
+
+                    b.ToTable("Organizations");
+                });
+
+            modelBuilder.Entity("AntroStop.DAL.Entities.OrganizationUser", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ID");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("OrganizationUsers");
                 });
 
             modelBuilder.Entity("AntroStop.DAL.Entities.Role", b =>
@@ -161,6 +229,23 @@ namespace AntroStop.DAL.SqlServer.Migrations
                         .IsRequired();
 
                     b.Navigation("Violation");
+                });
+
+            modelBuilder.Entity("AntroStop.DAL.Entities.OrganizationUser", b =>
+                {
+                    b.HasOne("AntroStop.DAL.Entities.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AntroStop.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
+
+                    b.Navigation("Organization");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AntroStop.DAL.Entities.User", b =>
