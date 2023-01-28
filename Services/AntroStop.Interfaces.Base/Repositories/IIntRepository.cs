@@ -14,5 +14,6 @@ namespace AntroStop.Interfaces.Base.Repositories
         Task<T> Update(T entity, CancellationToken Cancel = default);
         Task<T> Delete(int ID, CancellationToken Cancel = default);
         Task<T> Get(int ID, CancellationToken Cancel = default);
+        Task<IPaget<T>> GetPage(int PageIndex, int PageSize, CancellationToken Cancel = default);
     }
 }
