@@ -3,6 +3,7 @@ using AntroStop.Interfaces.Base.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AntroStop.WebAPI.Controllers
@@ -14,27 +15,51 @@ namespace AntroStop.WebAPI.Controllers
         private readonly IStringRepository<User> users;
         public UsersController(IStringRepository<User> users) => this.users = users;
 
+        //======================================================================================
+
+        // Колличественный вывод
+
         [HttpGet("count")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         public async Task<IActionResult> GetViolationsCount() => Ok(await users.Count());
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll() => Ok(await users.GetAll());
+
+        [HttpGet("items[[{Skip:int}:{Count:int}]]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<User>>> Get(int Skip, int Count) => Ok(await users.Get(Skip, Count));
+
+        [HttpGet("/page[[{PageIndex:int}:{PageSize:int}]]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IPaget<User>>> GetPage(int PageIndex, int PageSize)
+        {
+            var result = await users.GetPage(PageIndex, PageSize);
+
+            return result.Items.Any() ? Ok(result) : NotFound(result);
+        }
+
+        //======================================================================================
+
+        //=======================================================================================
+
+        //CRUD
 
         [HttpGet("exist/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(bool))]
         public async Task<IActionResult> Exist(string id) => await users.ExistID(id) ? Ok(true) : NotFound(false);
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll() => Ok(await users.GetAll());
+        
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(string id) => await users.Get(id) is { } item ? Ok(item) : NotFound();
 
-        [HttpGet("items[[{Skip:int}:{Count:int}]]")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<User>>> Get(int Skip, int Count) => Ok(await users.Get(Skip, Count));
+        
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -66,5 +91,7 @@ namespace AntroStop.WebAPI.Controllers
                 return NotFound(id);
             return Ok(result);
         }
+
+        //=======================================================================================
     }
 }

@@ -5,17 +5,11 @@ using AntroStop.Interfaces.Repositories;
 using AntroStop.WebAPI.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AntroStop.WebAPI
 {
@@ -28,11 +22,14 @@ namespace AntroStop.WebAPI
             services.AddDbContext<DataDB>(opt => opt.UseSqlServer(configuration.GetConnectionString("Data"), m => m.MigrationsAssembly("AntroStop.DAL.SqlServer")));//Добавление SQL Server
 
             //Add repositories
+            services.AddScoped(typeof(IOrganizationRepository<>), typeof(OrganizationRepository<>));
+            services.AddScoped(typeof(IOrganizationUserRepository<>), typeof(OrganizationUserRepository<>));
             services.AddScoped(typeof(IIntRepository<>), typeof(RoleRepository<>));
             services.AddScoped(typeof(IStringRepository<>), typeof(UserRepository<>));
-
             services.AddScoped(typeof(IViolationRepository<>), typeof(ViolationRepository<>));
+            services.AddScoped(typeof(IElementRepository<>), typeof(ElementRepository<>));
 
+            
             //Add service to initialize DB
             services.AddTransient<DataDBInitializer>();
 
