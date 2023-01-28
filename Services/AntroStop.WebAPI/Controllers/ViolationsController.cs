@@ -2,17 +2,17 @@
 using AntroStop.Interfaces.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
+using System;
 
 namespace AntroStop.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ElementsController : ControllerBase
+    public class ViolationsController : ControllerBase
     {
-        private readonly IElementRepository<Element> elements;
-        public ElementsController(IElementRepository<Element> elements) => this.elements = elements;
+        private readonly IViolationRepository<Violation> violations;
+        public ViolationsController(IViolationRepository<Violation> violations) => this.violations = violations;
 
         //======================================================================================
 
@@ -20,15 +20,15 @@ namespace AntroStop.WebAPI.Controllers
 
         [HttpGet("count")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
-        public async Task<IActionResult> GetElementsCount() => Ok(await elements.Count());
+        public async Task<IActionResult> GetViolationsCount() => Ok(await violations.Count());
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll() => Ok(await elements.GetAll());
+        public async Task<IActionResult> GetAll() => Ok(await violations.GetAll());
 
-        [HttpGet("getbyuser/{violationid}")]
+        [HttpGet("getbyuser/{userid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByUser(string violationid) => Ok(await elements.GetAllByID(Guid.Parse(violationid)));
+        public async Task<IActionResult> GetAllByUser(string violationid) => Ok(await violations.GetAllByID(violationid));
 
         //======================================================================================
 
@@ -38,9 +38,9 @@ namespace AntroStop.WebAPI.Controllers
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> Upload(Element item)
+        public async Task<IActionResult> Add(Violation item)
         {
-            var result = await elements.Add(item);
+            var result = await violations.Add(item);
 
             return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
@@ -48,20 +48,29 @@ namespace AntroStop.WebAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(string id) => await elements.Get(Guid.Parse(id)) is { } item ? Ok(item) : NotFound();
+        public async Task<IActionResult> Get(string id) => await violations.Get(Guid.Parse(id)) is { } item ? Ok(item) : NotFound();
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(string id)
         {
-            if (await elements.Delete(Guid.Parse(id)) is not { } result)
+            if (await violations.Delete(Guid.Parse(id)) is not { } result)
                 return NotFound(id);
             return Ok(result);
         }
 
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(Violation item)
+        {
+            var result = await violations.Update(item);
 
-
+            if (result is null)
+                return NotFound(item);
+            return AcceptedAtAction(nameof(Get), new { id = result.Id }, result);
+        }
         //=======================================================================================
     }
 }
