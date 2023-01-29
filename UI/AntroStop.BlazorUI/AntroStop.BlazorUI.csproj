@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Scripts\app.js" />
     <Content Include="Styles\app.css" />
   </ItemGroup>
 
