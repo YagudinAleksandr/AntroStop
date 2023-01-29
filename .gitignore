@@ -364,3 +364,4 @@ FodyWeavers.xsd
 **/wwwroot/lib
 **/wwwroot/lib-*
 /UI/AntroStop.BlazorUI/wwwroot/css
+/UI/AntroStop.BlazorUI/wwwroot/js
