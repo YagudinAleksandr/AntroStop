@@ -25,21 +25,21 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
-                    <a href="/" class="nav-link active">
+                <li class="nav-item">
+                    <NavLink href="/" Match="NavLinkMatch.All" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Главная</p>
-                    </a>
+                    </NavLink>
                     
                 </li>
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
+                    <NavLink href="/Violations" class="nav-link">
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Заявки
                             <span class="right badge badge-danger">10</span>
                         </p>
-                    </a>
+                    </NavLink>
                 </li>
                 
             </ul>
