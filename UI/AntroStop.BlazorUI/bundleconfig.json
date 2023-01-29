@@ -1,0 +1,14 @@
+﻿[
+  {
+    "inputFiles": [
+      "Styles/app.css"
+    ],
+    "outputFileName": "wwwroot/css/app.css"
+  },
+  {
+    "inputFiles": [
+      "Scripts/app.js"
+    ],
+    "outputFileName": "wwwroot/js/app.js"
+  }
+]

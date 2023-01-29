@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Common\AntroStop.Domain\AntroStop.Domain.csproj" />
     <ProjectReference Include="..\..\Data\AntroStop.DAL.SqlServer\AntroStop.DAL.SqlServer.csproj" />
+    <ProjectReference Include="..\..\UI\AntroStop.BlazorUI\AntroStop.BlazorUI.csproj" />
   </ItemGroup>
 
 </Project>
