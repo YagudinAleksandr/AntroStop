@@ -1,13 +1,14 @@
 ﻿using AntroStop.DAL.Entities;
+using AntroStop.Domain.Base.Models;
 using AutoMapper;
 
 namespace AntroStop.WebAPI.Infrastructure.Automapper
 {
-    public class ViolationsMap : Profile
+    public class AutoMapperMap : Profile
     {
-        public ViolationsMap()
+        public AutoMapperMap() 
         {
-            CreateMap<ViolationsMap, Violation>()
+            CreateMap<ViolationsInfo, Violation>()
                 .ReverseMap();
         }
     }

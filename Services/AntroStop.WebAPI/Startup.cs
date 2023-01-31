@@ -53,6 +53,7 @@ namespace AntroStop.WebAPI
                 app.UseDeveloperExceptionPage();
                 //Подключение к браузеру для отладки Blazor
                 app.UseWebAssemblyDebugging();
+
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AntroStop.WebAPI v1"));
             }
