@@ -24,4 +24,9 @@
     <Folder Include="Styles\admin\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\AntroStop.Domain.Base\AntroStop.Domain.Base.csproj" />
+    <ProjectReference Include="..\..\Services\AntroStop.WebAPIClients\AntroStop.WebAPIClients.csproj" />
+  </ItemGroup>
+
 </Project>

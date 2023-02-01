@@ -1,22 +1,21 @@
-﻿@page "/Violations"
-@using AntroStop.Domain.Base.Models;
-@using AntroStop.Interfaces.Repositories;
+﻿@page "/Users"
 
-@inject IViolationRepository<ViolationsInfo> repository
+@using AntroStop.Domain.Base.Models.Users;
+@using AntroStop.Interfaces.Base.Repositories;
 
-    
+@inject IStringRepository<UsersInfo> repository
 
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Заявки</h1>
+                <h1 class="m-0">Пользователи</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Главная</a></li>
-                    <li class="breadcrumb-item active">Заявки</li>
+                    <li class="breadcrumb-item active">Пользователи</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -25,73 +24,58 @@
 <!-- /.content-header -->
 <!-- Main content -->
 <section class="content">
-      <div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              
-              <!-- /.card-header -->
-              <div class="card-body">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
                         @if (sources is { })
                         {
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10px">ID</th>
-                                        <th>Заяка</th>
-                                        <th>Краткое описание</th>
-                                        <th>Координаты</th>
-                                        <th>Дата подачи заявки</th>
+                                        <th style="width: 10px">E-mail</th>
+                                        <th>ФИО</th>
+                                        <th>Роль</th>
+                                        <th>Дата создания</th>
                                         <th>Дата изменения</th>
-                                        <th style="width: 40px">Состояние</th>
+                                        <th style="width: 40px">Статус</th>
                                         <th>#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach(var src in sources)
+                                    @foreach (var src in sources)
                                     {
                                         <tr>
-                                            <td>@src.Id</td>
-                                            <td><a href="@src.Id">@src.Title</a></td>
+                                            <td><a href="/ViolationsByUser/@src.ID">@src.ID</a></td>
+                                            <td>@src.Name</td>
                                             <td>
-                                                @src.Description
+                                                @src.RoleName
                                             </td>
-                                            <td>@src.Coordinates</td>
                                             <td>@src.CreatedAt</td>
                                             <td>@src.UpdatedAt</td>
                                             <td>
-                                                @switch(src.Status)
+                                                @switch (src.Status)
                                                 {
-                                                    case "Inbox":
+                                                    case false:
                                                         <span class="badge bg-danger">
 
-                                                            На рассмотрении
+                                                            Не активен
 
                                                         </span>
                                                         break;
-                                                    case "Success":
+                                                    case true:
                                                         <span class="badge bg-success">
 
-                                                            Приняты меры
+                                                            Активен
 
                                                         </span>
                                                         break;
-                                                    case "Checking":
-                                                        <span class="badge bg-warning">
-
-                                                            Рассматривается
-
-                                                        </span>
-                                                        break;
-                                                    default:
-                                                        <span class="badge bg-danger">
-
-                                                            Не опознанный статус
-
-                                                        </span>
-                                                        break;
+                                                    
                                                 }
-                                                
+
                                             </td>
                                             <td class="project-actions text-right">
                                                 <a class="btn btn-primary btn-sm" href="#">
@@ -112,7 +96,7 @@
                                             </td>
                                         </tr>
                                     }
-                                    
+
 
                                 </tbody>
                             </table>
@@ -121,35 +105,31 @@
                         {
                             <p>Страница загружается</p>
                         }
-                
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                </ul>
-              </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <ul class="pagination pagination-sm m-0 float-right">
+                            <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.card -->
+                <!-- /.card -->
             </div>
-            <!-- /.card -->
+            <!-- /.col -->
+        </div>
 
-            
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-          </div>
-       
-      </div><!-- /.container-fluid -->
-    </section>
+    </div><!-- /.container-fluid -->
+</section>
 <!-- /.content -->
-
-
 @code
 {
-    private IList<ViolationsInfo> sources;
+    private IList<UsersInfo> sources;
 
     protected override async Task OnInitializedAsync()
     {

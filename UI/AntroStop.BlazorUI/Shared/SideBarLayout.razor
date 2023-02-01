@@ -1,4 +1,9 @@
-﻿ <!-- Main Sidebar Container -->
+﻿@using AntroStop.Domain.Base.Models;
+@using AntroStop.Interfaces.Repositories;
+
+@inject IViolationRepository<ViolationsInfo> repository;
+
+<!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
@@ -37,14 +42,41 @@
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Заявки
-                            <span class="right badge badge-danger">10</span>
+                            <span class="right badge badge-danger">@violationsCountNotWatched</span>
                         </p>
                     </NavLink>
                 </li>
-                
+                <li class="nav-item">
+                    <NavLink href="/Users" class="nav-link">
+                        <i class="nav-icon fas fa-address-book"></i>
+                        <p>
+                            Пользователи
+                        </p>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="/Organizations" class="nav-link">
+                        <i class="nav-icon fas fa-globe"></i>
+                        <p>
+                            Организации
+                        </p>
+                    </NavLink>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
 </aside>
+@code
+{
+    private int violationsCountNotWatched;
+
+    protected override async Task OnInitializedAsync()
+    {
+        violationsCountNotWatched = await repository.GetCountByStatus("Inbox");
+
+
+        StateHasChanged();
+    }
+}

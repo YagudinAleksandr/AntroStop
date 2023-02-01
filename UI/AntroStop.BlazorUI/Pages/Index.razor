@@ -1,5 +1,13 @@
 ﻿@page "/"
 
+@using AntroStop.Domain.Base.Models;
+@using AntroStop.Domain.Base.Models.Users;
+@using AntroStop.Interfaces.Base.Repositories;
+@using AntroStop.Interfaces.Repositories;
+
+@inject IViolationRepository<ViolationsInfo> violations;
+@inject IStringRepository<UsersInfo> users;
+
 <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -42,7 +50,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>1<sup style="font-size: 20px">%</sup></h3>
+                <h3>@violationsCountWatched</h3>
 
                 <p>Обработано заявок</p>
               </div>
@@ -57,14 +65,14 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>1</h3>
+                <h3>@usersCount</h3>
 
                 <p>Зарегистрировано пользователей</p>
               </div>
               <div class="icon">
                 <i class="ion ion-person-add"></i>
               </div>
-              <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="/Users" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -72,7 +80,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                <h3>10</h3>
+                        <h3>@violationsCountNotWatched</h3>
 
                 <p>Не обработано заявок</p>
               </div>
@@ -98,3 +106,17 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+@code
+{
+    private int violationsCountNotWatched, violationsCountWatched, usersCount;
+
+    protected override async Task OnInitializedAsync()
+    {
+        violationsCountNotWatched = await violations.GetCountByStatus("Inbox");
+        violationsCountWatched = await violations.GetCountByStatus("Success");
+        usersCount = await users.Count();
+
+        StateHasChanged();
+    }
+}
