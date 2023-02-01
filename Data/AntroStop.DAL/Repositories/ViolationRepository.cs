@@ -147,6 +147,11 @@ namespace AntroStop.DAL.Repositories
             return entity;
         }
 
+        public async Task<int> GetCountByStatus(string Status, CancellationToken Cancel = default)
+        {
+            return await Items.Where(s=>s.Status==Status).CountAsync(Cancel).ConfigureAwait(false);
+        }
+
         #endregion
 
         #region Page class
