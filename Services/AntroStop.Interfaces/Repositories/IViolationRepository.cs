@@ -1,6 +1,5 @@
 ﻿using AntroStop.Interfaces.Base.Entities;
 using AntroStop.Interfaces.Base.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
@@ -11,5 +10,6 @@ namespace AntroStop.Interfaces.Repositories
     {
         Task<IEnumerable<T>> GetAllByID(string Id, CancellationToken Cancel = default);
         Task<IEnumerable<T>> GetAllByStatus(string Status, CancellationToken Cancel = default);
+        Task<int> GetCountByStatus(string Status, CancellationToken Cancel = default);
     }
 }
