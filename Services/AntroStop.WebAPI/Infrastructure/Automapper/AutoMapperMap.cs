@@ -1,5 +1,6 @@
 ﻿using AntroStop.DAL.Entities;
 using AntroStop.Domain.Base.Models;
+using AntroStop.Domain.Base.Models.Users;
 using AutoMapper;
 
 namespace AntroStop.WebAPI.Infrastructure.Automapper
@@ -9,6 +10,9 @@ namespace AntroStop.WebAPI.Infrastructure.Automapper
         public AutoMapperMap() 
         {
             CreateMap<ViolationsInfo, Violation>()
+                .ReverseMap();
+
+            CreateMap<UsersInfo, User>()
                 .ReverseMap();
         }
     }
