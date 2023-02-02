@@ -14,6 +14,9 @@ namespace AntroStop.WebAPI.Infrastructure.Automapper
 
             CreateMap<UsersInfo, User>()
                 .ReverseMap();
+
+            CreateMap<RolesInfo, Role>()
+                .ReverseMap();
         }
     }
 }
