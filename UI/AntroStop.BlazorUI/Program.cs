@@ -27,6 +27,7 @@ namespace AntroStop.BlazorUI
 
             services.AddApi<IViolationRepository<ViolationsInfo>, WebViolationsRepository<ViolationsInfo>>("api/ViolationsRepository/");
             services.AddApi<IStringRepository<UsersInfo>, WebUsersRepository<UsersInfo>>("api/UsersRepository/");
+            services.AddApi<IIntRepository<RolesInfo>, WebRolesRepository<RolesInfo>>("api/RolesRepository/");
 
             await builder.Build().RunAsync();
         }
