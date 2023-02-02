@@ -2,7 +2,6 @@
 using AntroStop.Interfaces.Base.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
@@ -10,50 +9,34 @@ using System.Threading.Tasks;
 
 namespace AntroStop.WebAPIClients.Repositories
 {
-    public class WebUsersRepository<T> : IStringRepository<T> where T : IStringEntity
+    public class WebRolesRepository<T> : IIntRepository<T> where T : IIntEntity
     {
         private readonly HttpClient client;
 
-        public WebUsersRepository(HttpClient client) => this.client = client;
+        public WebRolesRepository(HttpClient client) => this.client = client;
 
         public Task<T> Add(T entity, CancellationToken Cancel = default)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<int> Count(CancellationToken Cancel = default) =>
-            await client.GetFromJsonAsync<int>("count", Cancel).ConfigureAwait(false);
-
-        public async Task<T> Delete(string ID, CancellationToken Cancel = default)
-        {
-            var response = await client.DeleteAsync($"{ID}", Cancel).ConfigureAwait(false);
-
-            if (response.StatusCode == HttpStatusCode.NotFound)
-                return default;
-
-            var result = await response
-               .EnsureSuccessStatusCode()
-               .Content
-               .ReadFromJsonAsync<T>(cancellationToken: Cancel)
-               .ConfigureAwait(false);
-
-            return result;
-        }
-
-        public Task<bool> ExistID(string ID, CancellationToken Cancel = default)
+        public Task<int> Count(CancellationToken Cancel = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task<T> Get(string ID, CancellationToken Cancel = default)
+        public Task<T> Delete(int ID, CancellationToken Cancel = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<T>> Get(int skip, int count, CancellationToken Cancel = default)
+        public Task<bool> ExistID(int ID, CancellationToken Cancel = default)
         {
             throw new NotImplementedException();
         }
+
+        public async Task<T> Get(int ID, CancellationToken Cancel = default) =>
+            await client.GetFromJsonAsync<T>($"{ID}", Cancel).ConfigureAwait(false);
 
         public async Task<IEnumerable<T>> GetAll(CancellationToken Cancel = default) =>
             await client.GetFromJsonAsync<IEnumerable<T>>("", Cancel).ConfigureAwait(false);
