@@ -46,7 +46,7 @@ namespace AntroStop.WebAPI.Controllers.Base
 
         [HttpGet("getbyuser/{userid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByUser(string violationid) => Ok(GetItem(await repository.GetAllByID(violationid)));
+        public async Task<IActionResult> GetAllByUser(string userid) => Ok(GetItem(await repository.GetAllByID(userid)));
 
         //======================================================================================
 
