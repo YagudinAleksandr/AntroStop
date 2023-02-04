@@ -9,6 +9,7 @@ using AntroStop.WebAPIClients.Repositories;
 using AntroStop.BlazorUI.Infrastructure.Extensions;
 using AntroStop.Interfaces.Repositories;
 using AntroStop.Domain.Base.Models.Users;
+using AntroStop.Interfaces.WebRepositories;
 
 namespace AntroStop.BlazorUI
 {
@@ -26,7 +27,7 @@ namespace AntroStop.BlazorUI
             //(host, client) => client.BaseAddress = new(host.GetRequiredService<IWebAssemblyHostEnvironment>().BaseAddress+"api/ViolationsRepository"));
 
             services.AddApi<IViolationRepository<ViolationsInfo>, WebViolationsRepository<ViolationsInfo>>("api/ViolationsRepository/");
-            services.AddApi<IStringRepository<UsersInfo>, WebUsersRepository<UsersInfo>>("api/UsersRepository/");
+            services.AddApi<IWebUsersRepository<UsersInfo>, WebUsersRepository<UsersInfo>>("api/UsersRepository/");
             services.AddApi<IIntRepository<RolesInfo>, WebRolesRepository<RolesInfo>>("api/RolesRepository/");
 
             await builder.Build().RunAsync();

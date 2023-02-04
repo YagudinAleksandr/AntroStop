@@ -1,0 +1,74 @@
+﻿@if (Users.Count > 0)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width: 10px">E-mail</th>
+                <th>ФИО</th>
+                <th>Роль</th>
+                <th>Дата создания</th>
+                <th>Дата изменения</th>
+                <th style="width: 40px">Статус</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var src in Users)
+            {
+                <tr>
+                    <td><a title="Просмотр заявок от пользователя: @src.ID" href="/ViolationsByUser/@src.ID">@src.ID</a></td>
+                    <td>@src.Name</td>
+                    <td>
+                        @src.RoleName
+                    </td>
+                    <td>@src.CreatedAt</td>
+                    <td>@src.UpdatedAt</td>
+                    <td>
+                        @switch (src.Status)
+                        {
+                            case false:
+                                <span class="badge bg-danger">
+
+                                    Не активен
+
+                                </span>
+                                break;
+                            case true:
+                                <span class="badge bg-success">
+
+                                    Активен
+
+                                </span>
+                                break;
+
+                        }
+
+                    </td>
+                    <td class="project-actions text-right">
+                        <a class="btn btn-primary btn-sm" href="#">
+                            <i class="fas fa-folder">
+                            </i>
+                            Просмотреть
+                        </a>
+                        <a class="btn btn-success btn-sm" href="/User/@src.ID">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Изменить
+                        </a>
+                        <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash">
+                            </i>
+                            Удалить
+                        </button>
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Страница загружается</p>
+}

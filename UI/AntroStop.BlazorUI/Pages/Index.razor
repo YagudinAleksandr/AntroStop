@@ -4,9 +4,10 @@
 @using AntroStop.Domain.Base.Models.Users;
 @using AntroStop.Interfaces.Base.Repositories;
 @using AntroStop.Interfaces.Repositories;
+@using AntroStop.Interfaces.WebRepositories;
 
 @inject IViolationRepository<ViolationsInfo> violations;
-@inject IStringRepository<UsersInfo> users;
+@inject IWebUsersRepository<UsersInfo> users;
 
 <!-- Content Header (Page header) -->
     <div class="content-header">
