@@ -1,5 +1,7 @@
 ﻿using AntroStop.DAL.Context;
 using AntroStop.DAL.Entities;
+using AntroStop.Domain.Pagination.Paging;
+using AntroStop.Domain.Pagination.RequestFeatures;
 using AntroStop.Interfaces.Base.Repositories;
 using AntroStop.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -116,37 +118,11 @@ namespace AntroStop.DAL.Repositories
             return entity;
         }
 
-        public async Task<IPaget<T>> GetPage(int PageIndex, int PageSize, CancellationToken Cancel = default)
+        public Task<PagedList<T>> GetPage(PageParametrs productParameters, CancellationToken Cancel = default)
         {
-            if (PageSize <= 0)
-                return new Page(Enumerable.Empty<T>(), PageSize, PageIndex, PageSize);
-
-            var query = Items;
-
-            var totalCount = await query.CountAsync(Cancel).ConfigureAwait(false);
-
-            if (totalCount == 0)
-                return new Page(Enumerable.Empty<T>(), 0, PageIndex, PageSize);
-
-            if (query is not IOrderedQueryable<T>)
-                query = query.OrderBy(item => item.Id);
-
-            if (PageIndex > 0)
-                query = query.Skip(PageIndex * PageSize);
-
-            query = query.Take(PageSize);
-
-            var items = await query.ToArrayAsync(Cancel).ConfigureAwait(false);
-
-            return new Page(items, totalCount, PageIndex, PageSize);
+            throw new NotImplementedException();
         }
         #endregion
 
-        #region Page class
-        protected record Page(IEnumerable<T> Items, int TotalCount, int PageIndex, int PageSize) : IPaget<T>
-        {
-            public int TotalPagesCount => (int)Math.Ceiling((double)TotalCount / PageSize);
-        }
-        #endregion
     }
 }
