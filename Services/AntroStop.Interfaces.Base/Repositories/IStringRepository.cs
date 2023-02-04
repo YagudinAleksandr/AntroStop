@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using AntroStop.Domain.Pagination.Paging;
+using AntroStop.Domain.Pagination.RequestFeatures;
 
 namespace AntroStop.Interfaces.Base.Repositories
 {
@@ -15,6 +17,6 @@ namespace AntroStop.Interfaces.Base.Repositories
         Task<T> Delete(string ID, CancellationToken Cancel = default);
         Task<T> Get(string ID, CancellationToken Cancel = default);
         Task<IEnumerable<T>> Get(int skip, int count, CancellationToken Cancel = default);
-        Task<IPaget<T>> GetPage(int PageIndex, int PageSize, CancellationToken Cancel = default);
+        Task<PagedList<T>> GetPage(PageParametrs productParameters, CancellationToken Cancel = default);
     }
 }
