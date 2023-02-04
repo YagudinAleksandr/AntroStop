@@ -1,9 +1,12 @@
 ﻿using AntroStop.DAL.Entities;
 using AntroStop.Domain.Base.Models.Users;
+using AntroStop.Domain.Pagination.RequestFeatures;
 using AntroStop.Interfaces.Base.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,6 +32,13 @@ namespace AntroStop.WebAPI.Controllers.Base
         protected virtual IEnumerable<TBase> GetBase(IEnumerable<T> items) => mapper.Map<IEnumerable<TBase>>(items);
         protected virtual IEnumerable<T> GetItem(IEnumerable<TBase> items) => mapper.Map<IEnumerable<T>>(items);
 
+        protected record Page(IEnumerable<T> Items, int TotalCount, int PageIndex, int PageSize) : IPaget<T>
+        {
+            public int TotalPagesCount => (int)Math.Ceiling((double)TotalCount / PageSize);
+        }
+
+        protected IPaget<T> GetItems(IPaget<TBase> page) => new Page(GetItem(page.Items), page.TotalCount, page.PageIndex, page.PageSize);
+
         //======================================================================================
 
         // Колличественный вывод
@@ -37,24 +47,18 @@ namespace AntroStop.WebAPI.Controllers.Base
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         public async Task<IActionResult> GetViolationsCount() => Ok(await repository.Count());
 
+        
+
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll() => Ok(GetItem(await repository.GetAll()));
-
-        /*
-        [HttpGet("items[[{Skip:int}:{Count:int}]]")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<User>>> Get(int Skip, int Count) => Ok(await repository.Get(Skip, Count));
-
-        [HttpGet("/page[[{PageIndex:int}:{PageSize:int}]]")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IPaget<User>>> GetPage(int PageIndex, int PageSize)
+        public async Task<IActionResult> GetAll([FromQuery] PageParametrs pageParametrs)
         {
-            var result = await repository.GetPage(PageIndex, PageSize);
+            var users = await repository.GetPage(pageParametrs);
 
-            return result.Items.Any() ? Ok(result) : NotFound(result);
-        }*/
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(users.MetaData));
+
+            return Ok(users);
+        }
+        
 
         //======================================================================================
 

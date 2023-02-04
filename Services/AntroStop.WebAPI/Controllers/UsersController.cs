@@ -31,15 +31,7 @@ namespace AntroStop.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<User>>> Get(int Skip, int Count) => Ok(await users.Get(Skip, Count));
 
-        [HttpGet("/page[[{PageIndex:int}:{PageSize:int}]]")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IPaget<User>>> GetPage(int PageIndex, int PageSize)
-        {
-            var result = await users.GetPage(PageIndex, PageSize);
-
-            return result.Items.Any() ? Ok(result) : NotFound(result);
-        }
+       
 
         //======================================================================================
 
