@@ -1,20 +1,30 @@
-﻿using AntroStop.Interfaces.Base.Entities;
-using AntroStop.Interfaces.Base.Repositories;
+﻿using AntroStop.Domain.Base.Models.Users;
+using AntroStop.Domain.Pagination.Features;
+using AntroStop.Domain.Pagination.RequestFeatures;
+using AntroStop.Interfaces.WebRepositories;
+using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace AntroStop.WebAPIClients.Repositories
 {
-    public class WebUsersRepository<T> : IStringRepository<T> where T : IStringEntity
+    public class WebUsersRepository<T> : IWebUsersRepository<T> where T : UsersInfo
     {
         private readonly HttpClient client;
+        private readonly JsonSerializerOptions options;
 
-        public WebUsersRepository(HttpClient client) => this.client = client;
+        public WebUsersRepository(HttpClient client)
+        {
+            this.client = client;
+            options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        }
 
         public Task<T> Add(T entity, CancellationToken Cancel = default)
         {
@@ -50,22 +60,29 @@ namespace AntroStop.WebAPIClients.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<T>> Get(int skip, int count, CancellationToken Cancel = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<T>> GetAll(CancellationToken Cancel = default) =>
-            await client.GetFromJsonAsync<IEnumerable<T>>("", Cancel).ConfigureAwait(false);
-
-        public Task<IPaget<T>> GetPage(int PageIndex, int PageSize, CancellationToken Cancel = default)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<T> Update(T entity, CancellationToken Cancel = default)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<PagingResponse<T>> GetPage(PageParametrs productParameters, CancellationToken Cancel = default)
+        {
+            var queryStringParam = new Dictionary<string, string>
+            {
+                ["pageNumber"] = productParameters.PageNumber.ToString()
+            };
+            var response = await client.GetAsync(QueryHelpers.AddQueryString("", queryStringParam), Cancel).ConfigureAwait(false);
+            var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(content);
+            }
+            var pagingResponse = new PagingResponse<T>
+            {
+                Items = JsonSerializer.Deserialize<List<T>>(content, options),
+                MetaData = JsonSerializer.Deserialize<MetaData>(response.Headers.GetValues("X-Pagination").First(), options)
+            };
+            return pagingResponse;
         }
     }
 }

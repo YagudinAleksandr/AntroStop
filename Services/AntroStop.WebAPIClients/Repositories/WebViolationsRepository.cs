@@ -1,4 +1,6 @@
-﻿using AntroStop.Interfaces.Base.Entities;
+﻿using AntroStop.Domain.Pagination.Paging;
+using AntroStop.Domain.Pagination.RequestFeatures;
+using AntroStop.Interfaces.Base.Entities;
 using AntroStop.Interfaces.Base.Repositories;
 using AntroStop.Interfaces.Repositories;
 using System;
@@ -62,7 +64,8 @@ namespace AntroStop.WebAPIClients.Repositories
         public async Task<int> GetCountByStatus(string Status, CancellationToken Cancel = default) =>
             await client.GetFromJsonAsync<int>($"countByStatus/{Status}", Cancel).ConfigureAwait(false);
 
-        public Task<IPaget<T>> GetPage(int PageIndex, int PageSize, CancellationToken Cancel = default)
+
+        public Task<PagedList<T>> GetPage(PageParametrs productParameters, CancellationToken Cancel = default)
         {
             throw new NotImplementedException();
         }
