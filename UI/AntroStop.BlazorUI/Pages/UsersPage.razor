@@ -3,6 +3,8 @@
 @using AntroStop.BlazorUI.Components.UsersTable
 
 
+@inject IToastService toastService
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -29,7 +31,7 @@
                     <div class="card-header container-fluid">
                         <div class="row">
                             <div class="col-md-10">
-                                
+                                <button type="button" class="btn btn-success" @onclick="@(()=>toastService.ShowToast<MyToastComponent>(_toastParameters))">Тест</button>
                             </div>
                             <div class="col-md-2 float-right">
                                 <a class="btn btn-primary btn-sm pull-right" href="/User"><i class="fas fa-plus"></i> Добавить пользователя</a>
@@ -52,5 +54,16 @@
         </div>
 
     </div><!-- /.container-fluid -->
+
 </section>
 <!-- /.content -->
+@code
+{
+    private ToastParameters _toastParameters = default!;
+    protected override void OnInitialized()
+    {
+        _toastParameters = new ToastParameters();
+        _toastParameters.Add(nameof(MyToastComponent.Title), "Успех!");
+        _toastParameters.Add(nameof(MyToastComponent.ToastParam), "Пользователь создан");
+    }
+}

@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.Domain.Base", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.BlazorUI", "UI\AntroStop.BlazorUI\AntroStop.BlazorUI.csproj", "{6ACE3310-8F9D-4C5F-B989-3DAC2093994A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.Domain.Pagination", "Common\AntroStop.Domain.Pagination\AntroStop.Domain.Pagination.csproj", "{58ACAA58-3689-433C-9747-F69A6FB92165}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.Domain.Pagination", "Common\AntroStop.Domain.Pagination\AntroStop.Domain.Pagination.csproj", "{58ACAA58-3689-433C-9747-F69A6FB92165}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

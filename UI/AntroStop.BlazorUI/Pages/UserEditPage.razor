@@ -1,11 +1,6 @@
 ﻿@page "/User"
 @page "/User/{userID}"
 
-@using AntroStop.Domain.Base.Models;
-@using AntroStop.Interfaces.Base.Repositories;
-
-@inject IIntRepository<RolesInfo> rolesRepository;
-
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -68,9 +63,9 @@
                   <div class="form-group">
                                 <label for="exampleSelectRole">Роль пользователя</label>
                                 <select class="custom-select form-control-border" id="exampleSelectRole">
-                                    @if(sources is {} sourceInf)
+                                    @if(roles is {} rolesInf)
                                     {
-                                        @foreach(var src in sourceInf)
+                                        @foreach(var src in rolesInf)
                                         {
                                             <option value="@src.ID">@src.Name (@src.Description)</option>
                                         }
@@ -91,7 +86,7 @@
                 <!-- /.card-body -->
 
                 <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Сохранить</button>
+                  <button type="submit" class="btn btn-primary">@ButtonStatus</button>
                 </div>
               </form>
             </div>
@@ -104,19 +99,3 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-@code {
-    [Parameter]
-    public string UserId { get; set; }
-
-    private IList<RolesInfo> sources;
-
-    protected override void OnInitialized()
-    {
-        UserId = UserId ?? string.Empty;
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        sources = (await rolesRepository.GetAll()).ToList();
-    }
-}

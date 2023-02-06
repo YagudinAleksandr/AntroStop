@@ -7,13 +7,14 @@
   },
   {
     "inputFiles": [
-      "Styles/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css",
-      "Styles/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css",
-      "Styles/admin/plugins/jqvmap/jqvmap.min.css",
+      "wwwroot/admin/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css",
+      "wwwroot/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css",
+      "wwwroot/admin/plugins/jqvmap/jqvmap.min.css",
       "wwwroot/admin/dist/css/adminlte.min.css",
-      "Styles/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
-      "Styles/admin/plugins/daterangepicker/daterangepicker.css",
-      "Styles/admin/plugins/summernote/summernote-bs4.min.css"
+      "wwwroot/admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
+      "wwwroot/admin/plugins/daterangepicker/daterangepicker.css",
+      "wwwroot/admin/plugins/summernote/summernote-bs4.min.css",
+      "wwwroot/admin/plugins/toastr/toastr.css"
     ],
     "outputFileName": "wwwroot/css/admin-app.css"
   }
