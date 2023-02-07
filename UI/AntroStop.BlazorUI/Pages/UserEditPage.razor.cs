@@ -37,34 +37,45 @@ namespace AntroStop.BlazorUI.Pages
         protected override void OnInitialized()
         {
             UserId = UserId ?? string.Empty;
+            user = new UsersInfo();
 
             if (UserId != string.Empty)
-            {
                 ButtonStatus = "Сохранить";
-            }
             else
-            {
                 ButtonStatus = "Добавить";
-                user = new UsersInfo();
-            }
-
-            
         }
 
         protected override async Task OnInitializedAsync()
         {
             roles = (await rolesRepository.GetAll()).ToList();
+
+            if(UserId!= string.Empty) 
+            {
+                user = await usersRepository.Get(UserId);
+            }
         }
 
         private async Task Save()
         {
-            await usersRepository.Add(user);
+            if (UserId == string.Empty)
+            {
+                await usersRepository.Add(user);
 
-            _toastParameters = new ToastParameters();
-            _toastParameters.Add(nameof(MyToastComponent.Title), "Успех!");
-            _toastParameters.Add(nameof(MyToastComponent.ToastParam), "Пользователь создан");
+                _toastParameters = new ToastParameters();
+                _toastParameters.Add(nameof(MyToastComponent.Title), "Успех!");
+                _toastParameters.Add(nameof(MyToastComponent.ToastParam), "Пользователь создан");
 
-            toast.ShowToast<MyToastComponent>(_toastParameters);
+                toast.ShowToast<MyToastComponent>(_toastParameters);
+            }
+            else
+            {
+                await usersRepository.Update(user);
+                _toastParameters = new ToastParameters();
+                _toastParameters.Add(nameof(MyToastComponent.Title), "Успех!");
+                _toastParameters.Add(nameof(MyToastComponent.ToastParam), "Пользователь изменен успешно");
+
+                toast.ShowToast<MyToastComponent>(_toastParameters);
+            }
 
             Navigation.NavigateTo("/Users");
         }

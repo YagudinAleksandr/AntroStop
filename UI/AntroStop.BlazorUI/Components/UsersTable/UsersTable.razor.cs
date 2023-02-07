@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
-using System;
 using AntroStop.Domain.Base.Models.Users;
+using AntroStop.Interfaces.WebRepositories;
+using Blazored.Toast.Services;
+using Blazored.Toast;
+using System.Linq;
 
 namespace AntroStop.BlazorUI.Components.UsersTable
 {
@@ -12,29 +13,28 @@ namespace AntroStop.BlazorUI.Components.UsersTable
     {
         [Parameter]
         public List<UsersInfo> Users { get; set; }
-        [Parameter]
-        public EventCallback<Guid> OnDeleted { get; set; }
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-        [Inject]
-        public IJSRuntime Js { get; set; }
 
-        private void RedirectToUpdate(Guid id)
-        {
-            /*
-            var url = Path.Combine("/updateProduct/", id.ToString());
-            NavigationManager.NavigateTo(url);*/
-        }
+        [Inject]
+        public IWebUsersRepository<UsersInfo> UsersRepo { get; set; }
+        [Inject]
+        public IToastService toast { get; set; }
+        private ToastParameters _toastParameters = default!;
 
-        private async Task Delete(Guid id)
+
+        private async Task Delete(string id)
         {
-            /*
-            var product = Products.FirstOrDefault(p => p.Id.Equals(id));
-            var confirmed = await Js.InvokeAsync<bool>("confirm", $"Are you sure you want to delete {product.Name} product?");
-            if (confirmed)
-            {
-                await OnDeleted.InvokeAsync(id);
-            }*/
+            if (id == string.Empty) return;
+
+            await UsersRepo.Delete(id);
+
+            Users.Remove(Users.Where(x => x.ID == id).FirstOrDefault());
+
+            _toastParameters = new ToastParameters();
+            _toastParameters.Add(nameof(MyToastComponent.Title), "Успех!");
+            _toastParameters.Add(nameof(MyToastComponent.ToastParam), "Пользователь удален успешно!");
+
+            toast.ShowToast<MyToastComponent>(_toastParameters);
+
         }
     }
 }

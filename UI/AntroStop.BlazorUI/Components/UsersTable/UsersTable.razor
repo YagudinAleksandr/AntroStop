@@ -45,17 +45,13 @@
 
                     </td>
                     <td class="project-actions text-right">
-                        <a class="btn btn-primary btn-sm" href="#">
-                            <i class="fas fa-folder">
-                            </i>
-                            Просмотреть
-                        </a>
+                        
                         <a class="btn btn-success btn-sm" href="/User/@src.ID">
                             <i class="fas fa-pencil-alt">
                             </i>
                             Изменить
                         </a>
-                        <button class="btn btn-danger btn-sm">
+                        <button @onclick="()=>Delete(src.ID)" class="btn btn-danger btn-sm">
                             <i class="fas fa-trash">
                             </i>
                             Удалить
