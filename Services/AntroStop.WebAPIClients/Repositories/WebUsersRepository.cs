@@ -26,9 +26,15 @@ namespace AntroStop.WebAPIClients.Repositories
             options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
-        public Task<T> Add(T entity, CancellationToken Cancel = default)
+        public async Task<T> Add(T entity, CancellationToken Cancel = default)
         {
-            throw new NotImplementedException();
+            var response = await client.PostAsJsonAsync("", entity, Cancel).ConfigureAwait(false);
+            var result = await response
+               .EnsureSuccessStatusCode()
+               .Content
+               .ReadFromJsonAsync<T>(cancellationToken: Cancel)
+               .ConfigureAwait(false);
+            return result;
         }
 
         public async Task<int> Count(CancellationToken Cancel = default) =>
