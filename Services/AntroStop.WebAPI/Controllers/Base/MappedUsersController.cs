@@ -32,12 +32,7 @@ namespace AntroStop.WebAPI.Controllers.Base
         protected virtual IEnumerable<TBase> GetBase(IEnumerable<T> items) => mapper.Map<IEnumerable<TBase>>(items);
         protected virtual IEnumerable<T> GetItem(IEnumerable<TBase> items) => mapper.Map<IEnumerable<T>>(items);
 
-        protected record Page(IEnumerable<T> Items, int TotalCount, int PageIndex, int PageSize) : IPaget<T>
-        {
-            public int TotalPagesCount => (int)Math.Ceiling((double)TotalCount / PageSize);
-        }
-
-        protected IPaget<T> GetItems(IPaget<TBase> page) => new Page(GetItem(page.Items), page.TotalCount, page.PageIndex, page.PageSize);
+        
 
         //======================================================================================
 
@@ -56,7 +51,7 @@ namespace AntroStop.WebAPI.Controllers.Base
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(users.MetaData));
 
-            return Ok(users);
+            return Ok(GetItem(users));
         }
         
 

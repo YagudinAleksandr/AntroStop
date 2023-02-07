@@ -49,6 +49,8 @@ namespace AntroStop.DAL.Repositories
             if (role == null) throw new ArgumentNullException();
 
             entity.Role = role;
+            entity.CreatedAt = DateTime.UtcNow;
+            entity.UpdatedAt = DateTime.UtcNow;
 
             await db.AddAsync(entity, Cancel).ConfigureAwait(false);
 
@@ -111,7 +113,7 @@ namespace AntroStop.DAL.Repositories
 
         public async Task<PagedList<T>> GetPage(PageParametrs productParameters, CancellationToken Cancel = default)
         {
-            var users = await Set.ToListAsync();
+            var users = await Set.Include(r=>r.Role).ToListAsync();
 
             return PagedList<T>.ToPagedList(users, productParameters.PageNumber, productParameters.PageSize);
         }
