@@ -1,16 +1,15 @@
 ﻿using AntroStop.DAL.Entities;
-using AntroStop.DAL.Repositories;
-using AntroStop.Interfaces.Base.Repositories;
 using AntroStop.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace AntroStop.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrganizationsController : ControllerBase
     {
         private readonly IOrganizationRepository<Organization> organizations;
