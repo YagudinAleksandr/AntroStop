@@ -2,7 +2,7 @@
 using AntroStop.DAL.Entities;
 using AntroStop.Domain.Pagination.Paging;
 using AntroStop.Domain.Pagination.RequestFeatures;
-using AntroStop.Interfaces.Base.Repositories;
+using AntroStop.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AntroStop.DAL.Repositories
 {
-    public class UserRepository<T> : IStringRepository<T> where T : User, new()
+    public class UserRepository<T> : IUsersRepository<T> where T : User, new()
     {
         #region Свойства
         private readonly DataDB db;
@@ -47,6 +47,9 @@ namespace AntroStop.DAL.Repositories
             var role = db.Roles.Where(i => i.ID == entity.RoleID).FirstOrDefault();
 
             if (role == null) throw new ArgumentNullException();
+
+            bool result = await ExistID(entity.ID, Cancel).ConfigureAwait(false);
+            if(result) throw new ArgumentException("Пользователь с таким E-mail уже существует");
 
             entity.Role = role;
             entity.CreatedAt = DateTime.UtcNow;
@@ -116,6 +119,16 @@ namespace AntroStop.DAL.Repositories
             var users = await Set.Include(r=>r.Role).ToListAsync();
 
             return PagedList<T>.ToPagedList(users, productParameters.PageNumber, productParameters.PageSize);
+        }
+
+        public async Task<T> GetByData(string Id, string password, CancellationToken Cancel = default)
+        {
+            return await Items
+                .Where(i => i.ID == Id)
+                .Where(p => p.Password == password)
+                .Include(r => r.Role)
+                .FirstOrDefaultAsync(Cancel)
+                .ConfigureAwait(false);
         }
         #endregion
     }
