@@ -6,7 +6,6 @@
 @using AntroStop.Interfaces.Repositories;
 @using AntroStop.Interfaces.WebRepositories;
 
-@inject IViolationRepository<ViolationsInfo> violations;
 @inject IWebUsersRepository<UsersInfo> users;
 
 <!-- Content Header (Page header) -->
@@ -51,7 +50,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>@violationsCountWatched</h3>
+                <h3>1</h3>
 
                 <p>Обработано заявок</p>
               </div>
@@ -81,7 +80,7 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                        <h3>@violationsCountNotWatched</h3>
+                        <h3>1</h3>
 
                 <p>Не обработано заявок</p>
               </div>
@@ -110,12 +109,10 @@
 
 @code
 {
-    private int violationsCountNotWatched, violationsCountWatched, usersCount;
+    private int usersCount;
 
     protected override async Task OnInitializedAsync()
     {
-        violationsCountNotWatched = await violations.GetCountByStatus("Inbox");
-        violationsCountWatched = await violations.GetCountByStatus("Success");
         usersCount = await users.Count();
 
         StateHasChanged();

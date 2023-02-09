@@ -27,7 +27,7 @@ namespace AntroStop.BlazorUI
             //services.AddHttpClient<IGuidRepository<ViolationsInfo>, WebViolationsRepository<ViolationsInfo>>(
             //(host, client) => client.BaseAddress = new(host.GetRequiredService<IWebAssemblyHostEnvironment>().BaseAddress+"api/ViolationsRepository"));
 
-            services.AddApi<IViolationRepository<ViolationsInfo>, WebViolationsRepository<ViolationsInfo>>("api/ViolationsRepository/");
+            
             services.AddApi<IWebUsersRepository<UsersInfo>, WebUsersRepository<UsersInfo>>("api/UsersRepository/");
             services.AddApi<IIntRepository<RolesInfo>, WebRolesRepository<RolesInfo>>("api/RolesRepository/");
 
