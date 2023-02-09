@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace AntroStop.DAL.Repositories
 {
-    public class ViolationRepository<T> : IViolationRepository<T> where T : Violation, new()
+    public class ViolationRepository<T> : IViolationsRepository<T> where T : Violation, new()
     {
         #region Свойства
         private readonly DataDB db;
