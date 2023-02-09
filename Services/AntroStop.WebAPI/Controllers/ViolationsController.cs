@@ -4,15 +4,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AntroStop.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ViolationsController : ControllerBase
     {
-        private readonly IViolationRepository<Violation> violations;
-        public ViolationsController(IViolationRepository<Violation> violations) => this.violations = violations;
+        private readonly IViolationsRepository<Violation> violations;
+        public ViolationsController(IViolationsRepository<Violation> violations) => this.violations = violations;
 
         //======================================================================================
 
