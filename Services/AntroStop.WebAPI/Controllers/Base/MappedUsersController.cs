@@ -1,14 +1,12 @@
 ﻿using AntroStop.DAL.Entities;
 using AntroStop.Domain.Base.Models.Users;
 using AntroStop.Domain.Pagination.RequestFeatures;
-using AntroStop.Interfaces.Base.Repositories;
+using AntroStop.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AntroStop.WebAPI.Controllers.Base
@@ -17,10 +15,11 @@ namespace AntroStop.WebAPI.Controllers.Base
     [ApiController]
     public class MappedUsersController<T,TBase> : ControllerBase where TBase : User where T : UsersInfo
     {
-        private readonly IStringRepository<TBase> repository;
+        private readonly IUsersRepository<TBase> repository;
         private readonly IMapper mapper;
 
-        public MappedUsersController(IStringRepository<TBase> repository, IMapper mapper)
+
+        public MappedUsersController(IUsersRepository<TBase> repository, IMapper mapper)
         {
             this.repository = repository;
             this.mapper = mapper;

@@ -3,13 +3,16 @@ using AntroStop.DAL.Repositories;
 using AntroStop.Interfaces.Base.Repositories;
 using AntroStop.Interfaces.Repositories;
 using AntroStop.WebAPI.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace AntroStop.WebAPI
 {
@@ -33,11 +36,34 @@ namespace AntroStop.WebAPI
             services.AddScoped(typeof(IOrganizationRepository<>), typeof(OrganizationRepository<>));
             services.AddScoped(typeof(IOrganizationUserRepository<>), typeof(OrganizationUserRepository<>));
             services.AddScoped(typeof(IIntRepository<>), typeof(RoleRepository<>));
-            services.AddScoped(typeof(IStringRepository<>), typeof(UserRepository<>));
-            services.AddScoped(typeof(IViolationRepository<>), typeof(ViolationRepository<>));
+            services.AddScoped(typeof(IUsersRepository<>), typeof(UserRepository<>));
+            services.AddScoped(typeof(IViolationsRepository<>), typeof(ViolationRepository<>));
             services.AddScoped(typeof(IElementRepository<>), typeof(ElementRepository<>));
 
-            
+            //JWT Auth
+            var jwtSettings = configuration.GetSection("JwtSettings");
+
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+
+                        ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
+                        ValidAudience = jwtSettings.GetSection("validAudience").Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
+                    };
+                });
+            //End of JWT
+
             //Add service to initialize DB
             services.AddTransient<DataDBInitializer>();
 
@@ -76,11 +102,16 @@ namespace AntroStop.WebAPI
 
             #endregion
 
+
+            app.UseCors("CorsPolicy");
+
             //Подключить в случае обработки https
             //app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            //Auth system
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

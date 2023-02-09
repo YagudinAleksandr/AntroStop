@@ -9,9 +9,6 @@ namespace AntroStop.WebAPI.Infrastructure.Automapper
     {
         public AutoMapperMap() 
         {
-            CreateMap<ViolationsInfo, Violation>()
-                .ReverseMap();
-
             CreateMap<UsersInfo, User>()
                 .ReverseMap();
 

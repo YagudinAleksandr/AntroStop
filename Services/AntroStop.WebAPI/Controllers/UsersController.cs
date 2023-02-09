@@ -1,9 +1,8 @@
 ﻿using AntroStop.DAL.Entities;
-using AntroStop.Interfaces.Base.Repositories;
+using AntroStop.Interfaces.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AntroStop.WebAPI.Controllers
@@ -12,8 +11,8 @@ namespace AntroStop.WebAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IStringRepository<User> users;
-        public UsersController(IStringRepository<User> users) => this.users = users;
+        private readonly IUsersRepository<User> users;
+        public UsersController(IUsersRepository<User> users) => this.users = users;
 
         //======================================================================================
 
