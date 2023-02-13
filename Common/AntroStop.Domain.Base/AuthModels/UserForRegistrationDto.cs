@@ -13,5 +13,8 @@ namespace AntroStop.Domain.Base.AuthModels
 
         [Required(ErrorMessage = "Поле Фамилия Имя должно быть заполнено")]
         public string Name { get; set; }
+
+        [Range(typeof(bool), "true", "true", ErrorMessage = "Вы должны принять условия АИС AntroStop")]
+        public bool IsAgree { get; set; }
     }
 }
