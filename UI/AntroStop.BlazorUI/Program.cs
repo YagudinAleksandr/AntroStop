@@ -7,10 +7,13 @@ using AntroStop.Interfaces.Base.Repositories;
 using AntroStop.Domain.Base.Models;
 using AntroStop.WebAPIClients.Repositories;
 using AntroStop.BlazorUI.Infrastructure.Extensions;
-using AntroStop.Interfaces.Repositories;
 using AntroStop.Domain.Base.Models.Users;
 using AntroStop.Interfaces.WebRepositories;
 using Blazored.Toast;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using AntroStop.BlazorUI.Providers;
+using AntroStop.BlazorUI.LocalServices;
 
 namespace AntroStop.BlazorUI
 {
@@ -23,14 +26,23 @@ namespace AntroStop.BlazorUI
 
             var services = builder.Services;
 
+            //Ссылка на основной хост
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            //services.AddHttpClient<IGuidRepository<ViolationsInfo>, WebViolationsRepository<ViolationsInfo>>(
-            //(host, client) => client.BaseAddress = new(host.GetRequiredService<IWebAssemblyHostEnvironment>().BaseAddress+"api/ViolationsRepository"));
-
-            
+           
+            //Репозитории
             services.AddApi<IWebUsersRepository<UsersInfo>, WebUsersRepository<UsersInfo>>("api/UsersRepository/");
             services.AddApi<IIntRepository<RolesInfo>, WebRolesRepository<RolesInfo>>("api/RolesRepository/");
 
+            //Локальное ситемное хранилище Blazor
+            services.AddBlazoredLocalStorage();
+
+            //Ядро авторизации
+            services.AddAuthorizationCore();
+            services.AddScoped<AuthenticationStateProvider, AuthStateProvider>();
+            //Подключение сервиса аутентификации
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+            //Подключение сервиса уведомлений
             services.AddBlazoredToast();
 
             await builder.Build().RunAsync();
