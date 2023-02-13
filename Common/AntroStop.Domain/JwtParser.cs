@@ -30,12 +30,16 @@ namespace AntroStop.Domain
         }
         private static byte[] ParseBase64WithoutPadding(string base64)
         {
-            switch (base64.Length % 4)
+            var output = base64;
+            output = output.Replace('-', '+'); // 62nd char of encoding
+            output = output.Replace('_', '/'); // 63rd char of encoding
+            switch (output.Length % 4)
             {
-                case 2: base64 += "=="; break;
-                case 3: base64 += "="; break;
+                case 2: output += "=="; break;
+                case 3: output += "="; break;
             }
-            return Convert.FromBase64String(base64);
+            return Convert.FromBase64String(output);
+            
         }
     }
 }
