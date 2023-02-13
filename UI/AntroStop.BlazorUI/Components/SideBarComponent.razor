@@ -1,0 +1,43 @@
+﻿<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <!-- Add icons to the links using the .nav-icon class
+         with font-awesome or any other icon font library -->
+    <li class="nav-item">
+        <NavLink href="/" Match="NavLinkMatch.All" class="nav-link">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>Главная</p>
+        </NavLink>
+
+    </li>
+    <li class="nav-item">
+        <NavLink href="/Violations" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+                Заявки
+                <span class="right badge badge-danger">1</span>
+            </p>
+        </NavLink>
+    </li>
+        <AuthorizeView Roles="Главный администратор">
+            <Authorized>
+                <li class="nav-item">
+
+                    <NavLink href="/Users" class="nav-link">
+                        <i class="nav-icon fas fa-address-book"></i>
+                        <p>
+                            Пользователи
+                        </p>
+                    </NavLink>
+
+                </li>
+            </Authorized>
+        </AuthorizeView>
+    <li class="nav-item">
+        <NavLink href="/Orgnization" class="nav-link">
+            <i class="nav-icon fas fa-globe"></i>
+            <p>
+                Организации
+            </p>
+        </NavLink>
+    </li>
+
+</ul>

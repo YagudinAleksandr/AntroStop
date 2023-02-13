@@ -1,5 +1,66 @@
-﻿<h3>LoginPage</h3>
+﻿@page "/Login"
 
-@code {
 
-}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Авторизация</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="breadcrumb-item active">Вход</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- jquery validation -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Вход в АИС <small>AntroStop</small></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <EditForm Model="_userForAuthentication" OnValidSubmit="ExecuteLogin">
+                        <DataAnnotationsValidator />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">E-mail <ValidationMessage For="@(() => _userForAuthentication.Id)" /></label>
+                                <InputText @bind-Value="_userForAuthentication.Id" type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="example@example.com"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Пароль <ValidationMessage For="@(() => _userForAuthentication.Password)" /></label>
+                                <InputText @bind-Value="_userForAuthentication.Password" type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="example123"/>
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="form-group">
+                                    <label>Еще нет аккаунта? <NavLink href="/Registration">Зарегистрироваться</NavLink>.</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary pull-right">Вход</button>
+                        </div>
+                    </EditForm>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+            <div class="col-md-6">
+            </div>
+            <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>

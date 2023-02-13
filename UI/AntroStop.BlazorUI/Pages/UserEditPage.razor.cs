@@ -64,6 +64,7 @@ namespace AntroStop.BlazorUI.Pages
                 _toastParameters = new ToastParameters();
                 _toastParameters.Add(nameof(MyToastComponent.Title), "Успех!");
                 _toastParameters.Add(nameof(MyToastComponent.ToastParam), "Пользователь создан");
+                _toastParameters.Add(nameof(MyToastComponent.Type), "success");
 
                 toast.ShowToast<MyToastComponent>(_toastParameters);
             }
@@ -73,6 +74,7 @@ namespace AntroStop.BlazorUI.Pages
                 _toastParameters = new ToastParameters();
                 _toastParameters.Add(nameof(MyToastComponent.Title), "Успех!");
                 _toastParameters.Add(nameof(MyToastComponent.ToastParam), "Пользователь изменен успешно");
+                _toastParameters.Add(nameof(MyToastComponent.Type), "success");
 
                 toast.ShowToast<MyToastComponent>(_toastParameters);
             }

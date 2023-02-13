@@ -32,6 +32,7 @@ namespace AntroStop.BlazorUI.Components.UsersTable
             _toastParameters = new ToastParameters();
             _toastParameters.Add(nameof(MyToastComponent.Title), "Успех!");
             _toastParameters.Add(nameof(MyToastComponent.ToastParam), "Пользователь удален успешно!");
+            _toastParameters.Add(nameof(MyToastComponent.Type), "success");
 
             toast.ShowToast<MyToastComponent>(_toastParameters);
 

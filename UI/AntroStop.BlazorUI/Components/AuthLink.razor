@@ -1,0 +1,56 @@
+﻿<CascadingAuthenticationState>
+    <AuthorizeView>
+        <Authorized>
+            <li class="nav-item dropdown user-menu">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+            <img src="src/user2-160x160.jpg" class="user-image img-circle elevation-2" alt="User Image">
+                <span class="d-none d-md-inline">
+                    @foreach(var claim in context.User.Claims)
+                    {
+                        if (claim.Type == "UserName"){
+                            @claim.Value
+                        }
+                    }
+                </span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                <!-- User image -->
+                <li class="user-header bg-primary">
+                    <p>
+                        @foreach(var claim in context.User.Claims)
+                            {
+                                if (claim.Type == "UserName")
+                                {
+                                    @claim.Value
+                                }
+                                if (claim.Type == "UserRoleName")
+                                {
+                                    @claim.Value
+                                }
+                                if (claim.Type == "CreatedAt")
+                                {
+                                    <small>Зарегистрирован: @claim.Value</small>
+                                }
+                                
+                            }
+                    </p>
+                </li>
+
+                <!-- Menu Footer-->
+                <li class="user-footer">
+                    <a href="#" class="btn btn-default btn-flat">Настройки</a>
+                    <NavLink href="/Logout" class="btn btn-default btn-flat float-right">Выход</NavLink>
+                </li>
+            </ul>
+        </li>
+        </Authorized>
+        <NotAuthorized>
+            <li class="nav-item">
+                <NavLink href="/Login" class="nav-link">Войти</NavLink>
+                <NavLink href="/Registration" class="nav-link">Зарегистрироваться</NavLink>
+            </li>
+        </NotAuthorized>
+    </AuthorizeView>
+</CascadingAuthenticationState>
+
+                    

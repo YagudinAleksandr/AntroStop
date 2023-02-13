@@ -1,0 +1,71 @@
+﻿@page "/Registration"
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Регистрация</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="breadcrumb-item active">Регистрация</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- jquery validation -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Регистрация в АИС <small>AntroStop</small></h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <EditForm Model="userForRegistration" OnValidSubmit="Registration">
+                        <DataAnnotationsValidator />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">E-mail <ValidationMessage For="@(() => userForRegistration.Id)" /></label>
+                                <InputText @bind-Value="userForRegistration.Id" type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="example@example.com" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputName">Фамилия Имя <ValidationMessage For="@(() => userForRegistration.Name)" /></label>
+                                <InputText @bind-Value="userForRegistration.Name" type="text" name="name" class="form-control" id="exampleInputName" placeholder="Иванов Иван" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Пароль <ValidationMessage For="@(() => userForRegistration.Password)" /></label>
+                                <InputText @bind-Value="userForRegistration.Password" type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="example123" />
+                            </div>
+                            <div class="form-group mb-0">
+                                <div class="custom-control custom-checkbox">
+                                    <InputCheckbox @bind-Value="userForRegistration.IsAgree" type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1" />
+                                    <label class="custom-control-label" for="exampleCheck1">Я соглашаюсь <a href="#">с правилами АИС AntroStop</a>.</label>
+                                    <ValidationMessage For="@(() => userForRegistration.IsAgree)"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary pull-right">Вход</button>
+                        </div>
+                    </EditForm>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!--/.col (left) -->
+            <!-- right column -->
+            <div class="col-md-6">
+            </div>
+            <!--/.col (right) -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>

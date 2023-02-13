@@ -12,67 +12,15 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="image">
-                <img src="src/user2-160x160.jpg" class="img-circle elevation-2" alt="Александр Ягудин">
-            </div>
-            <div class="info">
-                <a href="#" class="d-block">Александр Ягудмн</a>
-            </div>
-        </div>
+        
 
         
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                     with font-awesome or any other icon font library -->
-                <li class="nav-item">
-                    <NavLink href="/" Match="NavLinkMatch.All" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>Главная</p>
-                    </NavLink>
-                    
-                </li>
-                <li class="nav-item">
-                    <NavLink href="/Violations" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Заявки
-                            <span class="right badge badge-danger">1</span>
-                        </p>
-                    </NavLink>
-                </li>
-                <li class="nav-item">
-                    <NavLink href="/Users" class="nav-link">
-                        <i class="nav-icon fas fa-address-book"></i>
-                        <p>
-                            Пользователи
-                        </p>
-                    </NavLink>
-                </li>
-                <li class="nav-item">
-                    <NavLink href="/Organizations" class="nav-link">
-                        <i class="nav-icon fas fa-globe"></i>
-                        <p>
-                            Организации
-                        </p>
-                    </NavLink>
-                </li>
-            </ul>
+            <AntroStop.BlazorUI.Components.SideBarComponent/>
         </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
 </aside>
-@code
-{
-
-    protected override async Task OnInitializedAsync()
-    {
-
-        StateHasChanged();
-    }
-}
