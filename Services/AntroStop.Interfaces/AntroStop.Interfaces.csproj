@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\AntroStop.Domain.Base\AntroStop.Domain.Base.csproj" />
     <ProjectReference Include="..\..\Common\AntroStop.Domain\AntroStop.Domain.csproj" />
     <ProjectReference Include="..\AntroStop.Interfaces.Base\AntroStop.Interfaces.Base.csproj" />
   </ItemGroup>
