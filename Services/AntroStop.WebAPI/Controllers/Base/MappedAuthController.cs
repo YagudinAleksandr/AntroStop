@@ -33,12 +33,16 @@ namespace AntroStop.WebAPI.Controllers.Base
         }
 
         [HttpPost("Registration")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistration)
         {
+            List<string> errors = new List<string>();
+
             if (userForRegistration == null || !ModelState.IsValid)
-                return BadRequest();
+            {
+                errors.Add("Не удалось создать пользователя!");
+                return BadRequest(new RegistrationResponseDto { Errors = errors, IsSuccessfulRegistration = false });
+            }
+                
 
             var user = new User
             {
@@ -50,8 +54,12 @@ namespace AntroStop.WebAPI.Controllers.Base
             };
 
             var result = await repository.Add(user);
-            if (result==null)
-                return BadRequest("Пользователь с таким E-mail уже существует");
+            if (result == null)
+            {
+                errors.Add("Пользователь с таким E-mail уже существует");
+                return BadRequest(new RegistrationResponseDto { Errors = errors, IsSuccessfulRegistration = false });
+            }
+                
             
 
             return StatusCode(201);
@@ -63,10 +71,11 @@ namespace AntroStop.WebAPI.Controllers.Base
             var user = await repository.GetByData(userForAuthentication.Id, userForAuthentication.Password);
 
             if (user == null)
-                return NotFound("Неверный E-mail или пароль");
+                return BadRequest(new AuthResponseDto { ErrorMessage = "Неверный E-mail или пароль", IsAuthSuccessful=false });
+            
 
             if (!user.Status)
-                return Unauthorized("Ваш профиль заблокирован");
+                return BadRequest(new AuthResponseDto { ErrorMessage = "Ваш профиль заблокирован", IsAuthSuccessful = false });
 
             var signingCredentials = GetSigningCredentials();
             var claims = GetClaims(user);
@@ -88,10 +97,11 @@ namespace AntroStop.WebAPI.Controllers.Base
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.ID),
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Name),
-                new Claim(ClaimsIdentity.DefaultNameClaimType,user.CreatedAt.ToString()),
-                new Claim(ClaimsIdentity.DefaultNameClaimType,user.Role.Name)
+                new Claim("userID", user.ID),
+                new Claim("UserName", user.Name),
+                new Claim("CreatedAt",user.CreatedAt.ToString()),
+                new Claim("UserRoleName", user.Role.Name),
+                new Claim(ClaimTypes.Role, user.Role.Name)
             };
 
             return claims;
@@ -99,6 +109,7 @@ namespace AntroStop.WebAPI.Controllers.Base
 
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
         {
+            
             var tokenOptions = new JwtSecurityToken(
                 issuer: jwtSettings.GetSection("validIssuer").Value,
                 audience: jwtSettings.GetSection("validAudience").Value,

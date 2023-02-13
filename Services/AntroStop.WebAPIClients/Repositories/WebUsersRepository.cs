@@ -28,6 +28,7 @@ namespace AntroStop.WebAPIClients.Repositories
 
         public async Task<T> Add(T entity, CancellationToken Cancel = default)
         {
+
             var response = await client.PostAsJsonAsync("", entity, Cancel).ConfigureAwait(false);
             var result = await response
                .EnsureSuccessStatusCode()
