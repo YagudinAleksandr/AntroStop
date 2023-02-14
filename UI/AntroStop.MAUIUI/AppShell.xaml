@@ -11,4 +11,9 @@
         ContentTemplate="{DataTemplate local:SignIn}"
         Route="SignIn" />
 
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:SignUpPage}"
+        Route="SignUp" />
+
 </Shell>
