@@ -56,12 +56,23 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\Common\AntroStop.Domain.Base\AntroStop.Domain.Base.csproj" />
+	  <ProjectReference Include="..\..\Services\AntroStop.Interfaces.Base\AntroStop.Interfaces.Base.csproj" />
+	  <ProjectReference Include="..\..\Services\AntroStop.Interfaces\AntroStop.Interfaces.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="SignIn.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="SignUpPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Services\" />
+	  <Folder Include="ViewModels\" />
 	</ItemGroup>
 
 </Project>
