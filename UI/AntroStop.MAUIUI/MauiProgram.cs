@@ -1,4 +1,7 @@
-﻿namespace AntroStop.MAUIUI
+﻿using AntroStop.Interfaces.WebRepositories;
+using AntroStop.MAUIUI.Services;
+
+namespace AntroStop.MAUIUI
 {
     public static class MauiProgram
     {
@@ -12,6 +15,14 @@
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            //Добавление сервисов
+            builder.Services.AddSingleton<IAuthenticationService, LoginService>();
+
+            //Добавление страниц
+
+            //Добавление моделей
+
 
             return builder.Build();
         }
