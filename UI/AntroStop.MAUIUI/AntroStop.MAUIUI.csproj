@@ -49,10 +49,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\all_violations.png" />
 	  <None Remove="Resources\Images\email.png" />
 	  <None Remove="Resources\Images\mobile.png" />
 	  <None Remove="Resources\Images\password.png" />
+	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\user.png" />
+	  <None Remove="Resources\Images\violation.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -69,10 +72,17 @@
 	  <MauiXaml Update="SignUpPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Dashboard\DashboardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="ViewModels\" />
+	  <Folder Include="Handlers\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
 	</ItemGroup>
 
 </Project>

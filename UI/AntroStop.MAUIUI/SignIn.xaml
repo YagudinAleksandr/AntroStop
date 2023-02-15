@@ -64,7 +64,7 @@
                     </Grid>
                 </Frame>
 
-                <Button CornerRadius="0" HeightRequest="60" Text="Войти" FontSize="20" FontAttributes="Bold"/>
+                <Button CornerRadius="0" HeightRequest="60" Text="Войти" FontSize="20" FontAttributes="Bold" Command="{Binding LoginCommand}"/>
 
                 <Label Text="Забыли пароль?" TextColor="Gray" HorizontalTextAlignment="Center"/>
 
