@@ -59,6 +59,7 @@
 	  <ProjectReference Include="..\..\Common\AntroStop.Domain.Base\AntroStop.Domain.Base.csproj" />
 	  <ProjectReference Include="..\..\Services\AntroStop.Interfaces.Base\AntroStop.Interfaces.Base.csproj" />
 	  <ProjectReference Include="..\..\Services\AntroStop.Interfaces\AntroStop.Interfaces.csproj" />
+	  <ProjectReference Include="..\..\Services\AntroStop.WebAPIClients\AntroStop.WebAPIClients.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
