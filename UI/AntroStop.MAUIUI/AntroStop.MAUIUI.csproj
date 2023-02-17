@@ -59,4 +59,18 @@
 	  <None Remove="Resources\Images\user.png" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Services\" />
+	  <Folder Include="Models\" />
+	  <Folder Include="ViewModels\Startup\" />
+	  <Folder Include="ViewModels\Dashboard\" />
+	  <Folder Include="Views\Startup\" />
+	  <Folder Include="Views\Dashboard\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+	</ItemGroup>
+
 </Project>
