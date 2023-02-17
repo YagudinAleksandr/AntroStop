@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Shell.NavBarIsVisible="False"
+             xmlns:handlers="clr-namespace:AntroStop.MAUIUI.Handlers"
              x:Class="AntroStop.MAUIUI.MainPage">
 
     <ScrollView>
@@ -9,31 +11,37 @@
             Padding="30,0"
             VerticalOptions="Center">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+            <Image Source="company_logo.jpg" HeightRequest="150" WidthRequest="150"/>
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+            <VerticalStackLayout Spacing="5">
+                <Label Text="AntroStop" FontSize="28" TextColor="Gray" HorizontalTextAlignment="Center"/>
+                <Label Text="Войти в свой аккаунт" FontSize="18" TextColor="Gray" HorizontalTextAlignment="Center"/>
+            </VerticalStackLayout>
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+            <StackLayout Orientation="Horizontal">
+                <Frame ZIndex="1" HasShadow="True" HeightRequest="56" WidthRequest="56" CornerRadius="28" BorderColor="White">
+                    <Image Source="user.png" HeightRequest="20" WidthRequest="20"/>
+                </Frame>
+                <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White" HorizontalOptions="FillAndExpand">
+                    <handlers:BorderlessEntry Margin="20,0,0,0" Placeholder="E-mail" Keyboard="Email" VerticalOptions="Center"/>
+                </Frame>
+            </StackLayout>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
+            <StackLayout Orientation="Horizontal">
+                <Frame ZIndex="1" HasShadow="True" HeightRequest="56" WidthRequest="56" CornerRadius="28" BorderColor="White">
+                    <Image Source="lock.png" HeightRequest="20" WidthRequest="20"/>
+                </Frame>
+                <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White" HorizontalOptions="FillAndExpand">
+                    <handlers:BorderlessEntry Margin="20,0,0,0" Placeholder="Пароль" IsPassword="True" Keyboard="Email" VerticalOptions="Center"/>
+                </Frame>
+            </StackLayout>
+
+            <Button Text="Войти" HorizontalOptions="Center" WidthRequest="100" CornerRadius="20"/>
+
+            <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="Center">
+                <Label Text="Ещё нет аккаунта?" TextColor="Gray"/>
+                <Label Text="Зарегистрироваться" TextColor="Gray"/>
+            </StackLayout>
 
         </VerticalStackLayout>
     </ScrollView>
