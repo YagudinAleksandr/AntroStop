@@ -2,5 +2,9 @@
 {
     public partial class DashboardPageViewModel : BaseViewModel
     {
+        public DashboardPageViewModel()
+        {
+
+        }
     }
 }
