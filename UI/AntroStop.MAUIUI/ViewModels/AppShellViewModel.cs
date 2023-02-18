@@ -8,6 +8,9 @@ namespace AntroStop.MAUIUI.ViewModels
         [ICommand]
         async void SignOut()
         {
+            if (Preferences.ContainsKey(nameof(App.UserDetail)))
+                Preferences.Remove(nameof(App.UserDetail));
+
             await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
         }
     }

@@ -1,5 +1,6 @@
 ﻿using AntroStop.MAUIUI.ViewModels;
 using AntroStop.MAUIUI.Views.Dashboard;
+using AntroStop.MAUIUI.Views.Startup;
 
 namespace AntroStop.MAUIUI
 {
@@ -12,6 +13,7 @@ namespace AntroStop.MAUIUI
             this.BindingContext = new AppShellViewModel();
 
             Routing.RegisterRoute(nameof(DashboardPage), typeof(DashboardPage));
+            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
         }
     }
 }

@@ -23,7 +23,7 @@
                 <Image Source="user.png" HeightRequest="20" WidthRequest="20"/>
             </Frame>
             <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White" HorizontalOptions="FillAndExpand">
-                <handlers:BorderlessEntry Margin="20,0,0,0" Placeholder="E-mail" Keyboard="Email" VerticalOptions="Center"/>
+                <handlers:BorderlessEntry Text="{Binding Email}" Margin="20,0,0,0" Placeholder="E-mail" Keyboard="Email" VerticalOptions="Center"/>
             </Frame>
         </StackLayout>
 
@@ -32,7 +32,7 @@
                 <Image Source="lock.png" HeightRequest="20" WidthRequest="20"/>
             </Frame>
             <Frame HeightRequest="45" Margin="-20,0,0,0" Padding="0" HasShadow="True" BorderColor="White" HorizontalOptions="FillAndExpand">
-                <handlers:BorderlessEntry Margin="20,0,0,0" Placeholder="Пароль" IsPassword="True" Keyboard="Email" VerticalOptions="Center"/>
+                <handlers:BorderlessEntry Text="{Binding Password}" Margin="20,0,0,0" Placeholder="Пароль" IsPassword="True" Keyboard="Email" VerticalOptions="Center"/>
             </Frame>
         </StackLayout>
 

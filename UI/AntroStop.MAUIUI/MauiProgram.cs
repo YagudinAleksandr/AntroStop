@@ -21,11 +21,13 @@ namespace AntroStop.MAUIUI
             //Views
             builder.Services.AddSingleton<LoginPage>();
             builder.Services.AddSingleton<DashboardPage>();
+            builder.Services.AddSingleton<LoadingPage>();
             
 
             //Models
             builder.Services.AddSingleton<LoginPageViewModel>();
             builder.Services.AddSingleton<DashboardPageViewModel>();
+            builder.Services.AddSingleton<LoadingPageViewModel>();
 
             return builder.Build();
         }
