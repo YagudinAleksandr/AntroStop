@@ -1,4 +1,5 @@
 ﻿using AntroStop.Domain.Base.AuthModels;
+using AntroStop.MAUIUI.Controls;
 using AntroStop.MAUIUI.Views.Dashboard;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
@@ -38,6 +39,8 @@ namespace AntroStop.MAUIUI.ViewModels.Startup
                 Preferences.Set(nameof(App.UserDetail), JsonConvert.SerializeObject(userResponseDTO));
 
                 App.UserDetail = userResponseDTO;
+
+                AppShell.Current.FlyoutHeader = new FlyoutHeaderControl();
 
                 await Shell.Current.GoToAsync($"//{nameof(DashboardPage)}");
             }
