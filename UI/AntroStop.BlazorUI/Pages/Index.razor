@@ -5,6 +5,10 @@
 @using AntroStop.Interfaces.Base.Repositories;
 @using AntroStop.Interfaces.Repositories;
 @using AntroStop.Interfaces.WebRepositories;
+@using BlazorLeaflet;
+@using System.Drawing;
+@using BlazorLeaflet.Models;
+@inject IJSRuntime jsRuntime
 
 @inject IWebUsersRepository<UsersInfo> users;
 
@@ -92,29 +96,68 @@
           </div>
           <!-- ./col -->
         </div>
+      </div><!-- /.container-fluid -->
+    </section>
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-12 col-6">
+                <div style="height:700px; width:1080px;">
+                    <LeafletMap Map="_map" InitialPosition="_startAt" InitialZoom="4.8f" />
+                </div>
+            </div>
+        </div>
         <!-- /.row -->
         <!-- Main row -->
         <div class="row">
-          <!-- Left col -->
-          <section class="col-lg-7 connectedSortable">
-            
-          </section>
-          <!-- /.Left col -->
-          
+            <!-- Left col -->
+            <section class="col-lg-7 connectedSortable">
+            </section>
+            <!-- /.Left col -->
+
         </div>
         <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
-    </section>
+    </div><!-- /.container-fluid -->
+</section>
     <!-- /.content -->
 
 @code
 {
     private int usersCount;
 
+    private Map _map;
+
     protected override async Task OnInitializedAsync()
     {
         usersCount = await users.Count();
-
-        StateHasChanged();
     }
+
+    protected override void OnInitialized()
+    {
+        _startAt = new PointF(Lat, Lng);
+
+        _map = new Map(jsRuntime);
+
+        _map.Layers.Add(new TileLayer
+            {
+                UrlTemplate = "https://a.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+            });
+
+        var marker = new Marker(_startAt)
+            {
+                Draggable = true,
+                Title = @"Marker 1"
+            };
+
+
+        _map.Layers.Add(marker);
+    }
+
+    private float Lat { get; set; } = 47.5574007f;
+
+    private float Lng { get; set; } = 16.3918687f;
+
+    private PointF _startAt;
 }
