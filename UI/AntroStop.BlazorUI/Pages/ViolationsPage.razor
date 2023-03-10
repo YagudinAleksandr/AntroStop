@@ -1,0 +1,55 @@
+﻿@page "/Violations"
+
+@inject IToastService toastService
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Заявки</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="breadcrumb-item active">Заявки</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header container-fluid">
+                        <div class="row">
+                            <div class="col-md-10">
+                            </div>
+                            <div class="col-md-2 float-right">
+                                <a class="btn btn-primary btn-sm pull-right" href="/CreateViolation"><i class="fas fa-plus"></i> Создать заявку</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <!--Таблица пользователей-->
+                        <!--<UsersTable Users="UsersList" />-->
+                    </div>
+                    <!-- /.card-body -->
+                    <!--<Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />-->
+                </div>
+                <!-- /.card -->
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+
+    </div><!-- /.container-fluid -->
+
+</section>
+<!-- /.content -->
