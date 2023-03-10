@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.BlazorUI", "UI\An
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.Domain.Pagination", "Common\AntroStop.Domain.Pagination\AntroStop.Domain.Pagination.csproj", "{58ACAA58-3689-433C-9747-F69A6FB92165}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntroStop.MauiUI", "UI\AntroStop.MauiUI\AntroStop.MauiUI.csproj", "{60DDDD87-8021-48C0-B667-0A7662E19DE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntroStop.MauiUI", "UI\AntroStop.MauiUI\AntroStop.MauiUI.csproj", "{60DDDD87-8021-48C0-B667-0A7662E19DE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

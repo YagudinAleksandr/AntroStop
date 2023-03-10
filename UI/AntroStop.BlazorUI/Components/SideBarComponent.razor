@@ -66,6 +66,24 @@
                 </li>
             </Authorized>
         </AuthorizeView>
-    
+        <AuthorizeView Roles="Пользователь">
+            <Authorized>
+                <li class="nav-item">
+                    <NavLink href="/" Match="NavLinkMatch.All" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Подать заявку</p>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="/Violations" class="nav-link">
+                        <i class="nav-icon fas fa-th"></i>
+                        <p>
+                            Мои заявки
+                        </p>
+                    </NavLink>
+                </li>
+                
+            </Authorized>
+        </AuthorizeView>
 
 </ul>
