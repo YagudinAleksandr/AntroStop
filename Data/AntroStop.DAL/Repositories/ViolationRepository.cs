@@ -129,9 +129,11 @@ namespace AntroStop.DAL.Repositories
             return await Items.Where(s=>s.Status==Status).CountAsync(Cancel).ConfigureAwait(false);
         }
 
-        public Task<PagedList<T>> GetPage(PageParametrs productParameters, CancellationToken Cancel = default)
+        public async Task<PagedList<T>> GetPage(PageParametrs productParameters, CancellationToken Cancel = default)
         {
-            throw new NotImplementedException();
+            var users = await Set.ToListAsync();
+
+            return PagedList<T>.ToPagedList(users, productParameters.PageNumber, productParameters.PageSize);
         }
 
         #endregion
