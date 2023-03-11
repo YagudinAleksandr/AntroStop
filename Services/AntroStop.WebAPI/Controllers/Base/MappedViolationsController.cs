@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -46,6 +47,25 @@ namespace AntroStop.WebAPI.Controllers.Base
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(items.MetaData));
 
             return Ok(GetItem(items));
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Get(string id) => GetItem(await repository.Get(Guid.Parse(id))) is { } item ? Ok(item) : NotFound();
+
+        //==========================================================================
+
+        //==========================================================================
+
+        //CRUD
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> Add(T item)
+        {
+            var result = await repository.Add(GetBase(item));
+
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
         //==========================================================================
