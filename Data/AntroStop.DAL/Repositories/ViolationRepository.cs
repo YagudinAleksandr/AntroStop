@@ -131,7 +131,7 @@ namespace AntroStop.DAL.Repositories
 
         public async Task<PagedList<T>> GetPage(PageParametrs productParameters, CancellationToken Cancel = default)
         {
-            var users = await Set.ToListAsync();
+            var users = await Set.Include(u=>u.User).ToListAsync();
 
             return PagedList<T>.ToPagedList(users, productParameters.PageNumber, productParameters.PageSize);
         }
