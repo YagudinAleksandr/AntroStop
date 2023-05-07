@@ -68,6 +68,16 @@ namespace AntroStop.WebAPI.Controllers.Base
             return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (await repository.Delete(id) is not { } result)
+                return NotFound(id);
+            return Ok(GetItem(result));
+        }
+
         //==========================================================================
     }
 }

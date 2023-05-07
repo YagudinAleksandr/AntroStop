@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -43,9 +44,20 @@ namespace AntroStop.WebAPIClients.Repositories
         public async Task<int> Count(CancellationToken Cancel = default) =>
             await client.GetFromJsonAsync<int>("count", Cancel).ConfigureAwait(false);
 
-        public Task<T> Delete(Guid ID, CancellationToken Cancel = default)
+        public async Task<T> Delete(string ID, CancellationToken Cancel = default)
         {
-            throw new NotImplementedException();
+            var response = await client.DeleteAsync($"{ID}", Cancel).ConfigureAwait(false);
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return default;
+
+            var result = await response
+               .EnsureSuccessStatusCode()
+               .Content
+               .ReadFromJsonAsync<T>(cancellationToken: Cancel)
+               .ConfigureAwait(false);
+
+            return result;
         }
 
         public Task<bool> ExistID(Guid ID, CancellationToken Cancel = default)
@@ -53,7 +65,7 @@ namespace AntroStop.WebAPIClients.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<T> Get(Guid ID, CancellationToken Cancel = default)
+        public Task<T> Get(string ID, CancellationToken Cancel = default)
         {
             throw new NotImplementedException();
         }
