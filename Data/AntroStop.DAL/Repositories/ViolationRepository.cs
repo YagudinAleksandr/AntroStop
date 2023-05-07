@@ -39,6 +39,8 @@ namespace AntroStop.DAL.Repositories
 
             entity.User = user;
             entity.Id = Guid.Empty;
+            entity.CreatedAt = DateTime.UtcNow;
+            entity.UpdatedAt = DateTime.UtcNow;
 
             await db.AddAsync(entity, Cancel).ConfigureAwait(false);
 
