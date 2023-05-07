@@ -14,6 +14,8 @@
     <PackageReference Include="BlazorLeaflet" Version="0.4.0-alpha" />
     <PackageReference Include="BrowserInterop" Version="1.1.2" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="Darnton.Blazor.DeviceInterop" Version="0.1.2" />
+    <PackageReference Include="Darnton.Blazor.Leaflet" Version="0.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.17" PrivateAssets="all" />

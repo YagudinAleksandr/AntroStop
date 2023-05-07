@@ -17,5 +17,11 @@
       "wwwroot/admin/plugins/toastr/toastr.css"
     ],
     "outputFileName": "wwwroot/css/admin-app.css"
+  },
+  {
+    "inputFiles": [
+      "Styles/geolocation.css"
+    ],
+    "outputFileName": "wwwroot/css/geolocation.css"
   }
 ]

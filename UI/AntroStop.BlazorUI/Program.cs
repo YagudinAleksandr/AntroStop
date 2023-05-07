@@ -14,6 +14,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using AntroStop.BlazorUI.Providers;
 using AntroStop.BlazorUI.LocalServices;
+using Darnton.Blazor.DeviceInterop.Geolocation;
 
 namespace AntroStop.BlazorUI
 {
@@ -28,7 +29,8 @@ namespace AntroStop.BlazorUI
 
             //—сылка на основной хост
             services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-           
+            services.AddScoped<IGeolocationService, GeolocationService>();
+
             //–епозитории
             services.AddApi<IWebUsersRepository<UsersInfo>, WebUsersRepository<UsersInfo>>("api/UsersRepository/");
             services.AddApi<IIntRepository<RolesInfo>, WebRolesRepository<RolesInfo>>("api/RolesRepository/");
