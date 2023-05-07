@@ -32,7 +32,7 @@ namespace AntroStop.BlazorUI
             //Репозитории
             services.AddApi<IWebUsersRepository<UsersInfo>, WebUsersRepository<UsersInfo>>("api/UsersRepository/");
             services.AddApi<IIntRepository<RolesInfo>, WebRolesRepository<RolesInfo>>("api/RolesRepository/");
-            services.AddApi<IWebViolationsRepository<ViolationsInfo>, WebViolationsRepository<ViolationsInfo>>("api/ViolationsRepository");
+            services.AddApi<IWebViolationsRepository<ViolationsInfo>, WebViolationsRepository<ViolationsInfo>>("api/ViolationsRepository/");
 
             //Локальное ситемное хранилище Blazor
             services.AddBlazoredLocalStorage();
