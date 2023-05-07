@@ -16,8 +16,8 @@ namespace AntroStop.Interfaces.WebRepositories
         Task<int> GetCountByStatus(string Status, CancellationToken Cancel = default);
         Task<T> Add(T entity, CancellationToken Cancel = default);
         Task<T> Update(T entity, CancellationToken Cancel = default);
-        Task<T> Delete(Guid ID, CancellationToken Cancel = default);
-        Task<T> Get(Guid ID, CancellationToken Cancel = default);
+        Task<T> Delete(string ID, CancellationToken Cancel = default);
+        Task<T> Get(string ID, CancellationToken Cancel = default);
         Task<PagingResponse<T>> GetPage(PageParametrs productParameters, CancellationToken Cancel = default);
     }
 }
