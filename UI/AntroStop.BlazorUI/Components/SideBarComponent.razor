@@ -15,7 +15,7 @@
                         <i class="nav-icon fas fa-th"></i>
                         <p>
                             Заявки
-                            <span class="right badge badge-danger">1</span>
+                            <span class="right badge badge-danger">@inboxViolations</span>
                         </p>
                     </NavLink>
                 </li>
@@ -66,7 +66,7 @@
                 </li>
             </Authorized>
         </AuthorizeView>
-        <AuthorizeView Roles="Пользователь">
+        <AuthorizeView Context="Auth" Roles="Пользователь">
             <Authorized>
                 <li class="nav-item">
                     <NavLink href="/" Match="NavLinkMatch.All" class="nav-link">
@@ -75,15 +75,25 @@
                     </NavLink>
                 </li>
                 <li class="nav-item">
-                    <NavLink href="/Violations" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
-                        <p>
-                            Мои заявки
-                        </p>
-                    </NavLink>
+                @foreach (var claim in Auth.User.Claims)
+                {
+                    if (claim.Type == "userID")
+                    {
+                        UserID = "/ViolationsByUser/" + claim.Value;
+                    }
+                }
+                <NavLink href="@UserID" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Мои заявки
+                    </p>
+                </NavLink>
                 </li>
                 
             </Authorized>
         </AuthorizeView>
 
 </ul>
+@code{
+    public string UserID{ get; set; }
+}

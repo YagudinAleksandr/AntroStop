@@ -1,6 +1,7 @@
 ﻿@page "/"
 
-@using BlazorLeaflet
+@using AntroStop.BlazorUI.Components
+@using Darnton.Blazor.Leaflet;
 @using BrowserInterop.Geolocation;
 @inject IJSRuntime jsRuntime
 
@@ -48,14 +49,14 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>1</h3>
+                <h3>@closedViolations</h3>
 
                 <p>Обработано заявок</p>
               </div>
               <div class="icon">
                         <i class="ion ion-document"></i>
               </div>
-              <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="/Violations" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -78,14 +79,14 @@
             <!-- small box -->
             <div class="small-box bg-danger">
               <div class="inner">
-                        <h3>1</h3>
+                        <h3>@inboxViolations</h3>
 
                 <p>Не обработано заявок</p>
               </div>
               <div class="icon">
                 <i class="ion ion-pie-graph"></i>
               </div>
-              <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="/Violations" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -93,41 +94,97 @@
       </div><!-- /.container-fluid -->
     </section>
     </Authorized>
-    <NotAuthorized>
-        <div class="content-header">
+</AuthorizeView>
+
+
+
+<!-- Main content -->
+<AuthorizeView Roles="Пользователь">
+    <Authorized Context="Auth">
+        <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                    </div><!-- /.col -->
+
+                        <h1> Подача заявки</h1>
+
+                    </div>
                     <div class="col-sm-6">
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <div class="col-lg-3 col-3">
-                        
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                            <li class="breadcrumb-item"><a href="/Violations">Мои заявки</a></li>
+                            <li class="breadcrumb-item active">Подача заявки</li>
+                        </ol>
                     </div>
-                    <!-- ./col -->
-                    <div class="col-lg-6 col-6">
-                        <!-- small box -->
-                        <NavLink href="/Login" class="btn btn-success btn-lg mx-auto"><h1>Подать заявку</h1></NavLink>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-3">
-                        <!-- small box -->
-                        
-                    </div>
-                    <!-- ./col -->
                 </div>
             </div><!-- /.container-fluid -->
         </section>
-        
-    </NotAuthorized>
+        <section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Форма заявки</h3>
+                        
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <div>
+                         <button class="btn btn-warning" @onclick="ShowCurrentPosition">Определить моё местоположение</button>
+                    </div>
+                    <EditForm Model="violationsInfo" OnValidSubmit="Save">
+                        
+                        <div class="card-body">
+                                    
+                                    
+                                    <LeafletMap Map="PositionMap" TileLayer="PositionTileLayer" />
+                                    <DataAnnotationsValidator />
+                                    <div class="form-group">
+                                        @foreach(var claim in Auth.User.Claims)
+                                        {
+                                            if(claim.Type=="userID")
+                                            {
+                                                UserID = claim.Value;
+                                            }
+                                        }
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputCoordinates">Координаты <ValidationMessage For="@(() => violationsInfo.Coordinates)" /></label>
+                                        <InputText @bind-Value="violationsInfo.Coordinates" type="text" class="form-control" id="exampleInputCoordinates" placeholder="47.000000;54.26525" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputTitle1">Заголовок <ValidationMessage For="@(() => violationsInfo.Title)" /></label>
+                                        <InputText @bind-Value="violationsInfo.Title" type="text" class="form-control" id="exampleInputTitle1" placeholder="Сброс мусора" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleDescription">Описание <ValidationMessage For="@(()=>violationsInfo.Description)" /></label>
+                                        <InputText @bind-Value="violationsInfo.Description" type="text" class="form-control" id="exampleDescription" placeholder="Выброс токсичных отходов" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleDescription">Файлы</label>
+                                        <FilesUpload OnChange="AssignImageUrl" />
+                                    </div>
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Подать</button>
+                        </div>
+                    </EditForm>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!--/.col (left) -->
+
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+    </Authorized>
 </AuthorizeView>
     <!-- /.content -->

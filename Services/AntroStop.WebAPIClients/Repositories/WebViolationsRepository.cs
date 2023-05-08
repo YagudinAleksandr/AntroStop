@@ -68,20 +68,14 @@ namespace AntroStop.WebAPIClients.Repositories
         public async Task<T> Get(string ID, CancellationToken Cancel = default) =>
             await client.GetFromJsonAsync<T>($"{ID}", Cancel).ConfigureAwait(false);
 
-        public Task<IEnumerable<T>> GetAllByID(string Id, CancellationToken Cancel = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<T>> GetAllByID(string Id, CancellationToken Cancel = default) =>
+            await client.GetFromJsonAsync<IEnumerable<T>>($"getByUser/{Id}", Cancel).ConfigureAwait(false);
 
-        public Task<IEnumerable<T>> GetAllByStatus(string Status, CancellationToken Cancel = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<T>> GetAllByStatus(string Status, CancellationToken Cancel = default)=>
+            await client.GetFromJsonAsync<IEnumerable<T>>("getByStatus/{id}", Cancel).ConfigureAwait(false);
 
-        public Task<int> GetCountByStatus(string Status, CancellationToken Cancel = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<int> GetCountByStatus(string Status, CancellationToken Cancel = default) =>
+            await client.GetFromJsonAsync<int>($"countByStatus/{Status}", Cancel).ConfigureAwait(false);
 
         public async Task<PagingResponse<T>> GetPage(PageParametrs productParameters, CancellationToken Cancel = default)
         {

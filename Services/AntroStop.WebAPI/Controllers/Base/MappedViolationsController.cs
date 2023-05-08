@@ -39,6 +39,10 @@ namespace AntroStop.WebAPI.Controllers.Base
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
         public async Task<IActionResult> GetCount() => Ok(await repository.Count());
 
+        [HttpGet("countByStatus/{Status}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
+        public async Task<IActionResult> GetCountByStatus(string Status) => Ok(await repository.GetCountByStatus(Status));
+
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PageParametrs pageParametrs)
         {
@@ -53,6 +57,11 @@ namespace AntroStop.WebAPI.Controllers.Base
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(string id) => GetItem(await repository.Get(Guid.Parse(id))) is { } item ? Ok(item) : NotFound();
+
+        [HttpGet("getByUser/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByUser(string id) => GetItem(await repository.GetAllByID(id)) is { } item ? Ok(item) : NotFound();
 
         //==========================================================================
 
