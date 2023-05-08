@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using AntroStop.BlazorUI.Providers;
 using AntroStop.BlazorUI.LocalServices;
 using Darnton.Blazor.DeviceInterop.Geolocation;
+using Tewr.Blazor.FileReader;
 
 namespace AntroStop.BlazorUI
 {
@@ -35,6 +36,8 @@ namespace AntroStop.BlazorUI
             services.AddApi<IWebUsersRepository<UsersInfo>, WebUsersRepository<UsersInfo>>("api/UsersRepository/");
             services.AddApi<IIntRepository<RolesInfo>, WebRolesRepository<RolesInfo>>("api/RolesRepository/");
             services.AddApi<IWebViolationsRepository<ViolationsInfo>, WebViolationsRepository<ViolationsInfo>>("api/ViolationsRepository/");
+
+            services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
             //Локальное ситемное хранилище Blazor
             services.AddBlazoredLocalStorage();
