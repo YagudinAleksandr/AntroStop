@@ -35,10 +35,8 @@ namespace AntroStop.WebAPIClients.Repositories
             return result;
         }
 
-        public Task<IEnumerable<T>> GetAllByID(string Id, CancellationToken Cancel = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<T>> GetAllByID(string Id, CancellationToken Cancel = default) =>
+            await client.GetFromJsonAsync<IEnumerable<T>>($"allFilesByViolation/{Id}", Cancel).ConfigureAwait(false);
 
         public async Task<string> UploadProductImage(MultipartFormDataContent content)
         {
@@ -50,7 +48,7 @@ namespace AntroStop.WebAPIClients.Repositories
             }
             else
             {
-                var imgUrl = Path.Combine("https://localhost:5000/", postContent);
+                var imgUrl = Path.Combine("http://localhost:5000/", postContent);
                 return imgUrl;
             }
         }

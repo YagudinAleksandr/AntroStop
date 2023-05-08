@@ -57,6 +57,10 @@ namespace AntroStop.WebAPI.Controllers.Base
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(string id) => GetItem(await repository.Get(Guid.Parse(id))) is { } item ? Ok(item) : NotFound();
 
+        [HttpGet("allFilesByViolation/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll(string id) => Ok(GetItem(await repository.GetAllByID(Guid.Parse(id))));
+
         [HttpPost("upload")]
         public IActionResult Upload()
         {

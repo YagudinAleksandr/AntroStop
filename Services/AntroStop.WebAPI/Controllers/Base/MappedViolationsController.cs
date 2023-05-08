@@ -78,6 +78,18 @@ namespace AntroStop.WebAPI.Controllers.Base
             return Ok(GetItem(result));
         }
 
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(T item)
+        {
+            var result = await repository.Update(GetBase(item));
+
+            if (result is null)
+                return NotFound(item);
+            return AcceptedAtAction(nameof(Get), new { id = result.Id }, result);
+        }
+
         //==========================================================================
     }
 }

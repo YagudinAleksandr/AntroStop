@@ -1,1 +1,108 @@
-﻿@page "/EditViolation"
+﻿@page "/EditViolation/{id}"
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+
+                <h1> Рассмотрение заявки</h1>
+
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Главная</a></li>
+                    <li class="breadcrumb-item"><a href="/Violations">Заявки</a></li>
+                    <li class="breadcrumb-item active">Рассмотрение</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Main content -->
+<AuthorizeView>
+    <Authorized Context="Auth">
+        <section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                                <h3 class="card-title">
+                                    @if (violationsInfo != null)
+                                    {
+                                        @violationsInfo.Title
+                                    }
+                                </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <EditForm Model="violationsInfo" OnValidSubmit="Save">
+                        
+                        <div class="card-body">
+                                    <LeafletMap Map="PositionMap" TileLayer="PositionTileLayer" />
+                                    
+                                    <DataAnnotationsValidator />
+                                    <div class="form-group">
+                                        <lable for="TitleViolation">Заявка: 
+                                            @if (violationsInfo != null)
+                                            {
+                                                @violationsInfo.Id
+                                            }
+                                        </lable>
+                                        <InputText class="form-control" disabled id="TitleViolation" @bind-Value="violationsInfo.Title" />
+                                    </div>
+                                    <div class="form-group">
+                                        <lable for="TitleViolationDescription">Описание</lable>
+                                        <InputText class="form-control" disabled id="TitleViolationDescription" @bind-Value="violationsInfo.Description" />
+                                    </div>
+                                    <div class="form-group">
+                                        <lable>Файлы</lable>
+                                        @if (filesUrl != null && filesUrl.Count > 0)
+                                        {
+                                            <div class="row">
+                                            @foreach(var file in filesUrl)
+                                            {
+                                                    <div class="col-sm-2">
+                                                        <a href="@file" data-toggle="lightbox" data-gallery="gallery">
+                                                            <img src="@file" class="img-fluid mb-2" alt="white sample" />
+                                                        </a>
+                                                    </div>
+                                            }
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="form-group">
+                                        <lable for="ViolationAnswer">Ответ</lable>
+                                        <InputText class="form-control" id="ViolationAnswer" @bind-Value="violationsInfo.Answer" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="SelectBorderStatus">Статус</label>
+                                        <InputSelect class="custom-select form-control-border" id="SelectBorderStatus" @bind-Value="violationsInfo.Status">
+                                            <option value="Принята">Принята</option>
+                                            <option value="Проверка">Проверка</option>
+                                            <option value="Рассмотрение">Рассмотрение</option>
+                                            <option value="Закрыта">Закрыта</option>
+                                        </InputSelect>
+                                    </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button class="btn btn-primary">Скачать заявку</button>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </EditForm>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!--/.col (left) -->
+
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+    </Authorized>
+</AuthorizeView>

@@ -65,10 +65,8 @@ namespace AntroStop.WebAPIClients.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<T> Get(string ID, CancellationToken Cancel = default)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<T> Get(string ID, CancellationToken Cancel = default) =>
+            await client.GetFromJsonAsync<T>($"{ID}", Cancel).ConfigureAwait(false);
 
         public Task<IEnumerable<T>> GetAllByID(string Id, CancellationToken Cancel = default)
         {
@@ -105,9 +103,15 @@ namespace AntroStop.WebAPIClients.Repositories
             return pagingResponse;
         }
 
-        public Task<T> Update(T entity, CancellationToken Cancel = default)
+        public async Task<T> Update(T entity, CancellationToken Cancel = default)
         {
-            throw new NotImplementedException();
+            var response = await client.PutAsJsonAsync("", entity, Cancel).ConfigureAwait(false);
+            var result = await response
+               .EnsureSuccessStatusCode()
+               .Content
+               .ReadFromJsonAsync<T>(cancellationToken: Cancel)
+               .ConfigureAwait(false);
+            return result;
         }
     }
 }
