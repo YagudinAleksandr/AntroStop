@@ -7,6 +7,7 @@ using Blazored.Toast.Services;
 using Darnton.Blazor.DeviceInterop.Geolocation;
 using Darnton.Blazor.Leaflet.LeafletMap;
 using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AntroStop.BlazorUI.Pages
@@ -22,6 +23,11 @@ namespace AntroStop.BlazorUI.Pages
         public IWebViolationsRepository<ViolationsInfo> violationsRepository { get; set; }
 
         private string UserID = string.Empty;
+
+        //Файлы
+        public List<ElementsInfo> Elements = new List<ElementsInfo>();
+        [Inject]
+        public IWebElementsRepository<ElementsInfo> ElementsRepository { get; set; }
 
         //Всплывающие окна
         [Inject]
@@ -78,12 +84,20 @@ namespace AntroStop.BlazorUI.Pages
         private async Task Save()
         {
 
-            
-
             violationsInfo.Status = "Принята";
             violationsInfo.UserID = UserID;
 
-            await violationsRepository.Add(violationsInfo);
+            var violation = await violationsRepository.Add(violationsInfo);
+
+            if (Elements.Count > 0)
+            {
+                foreach(var element in Elements) 
+                {
+                    element.ViolationID = violation.Id;
+                    element.Type = "File";
+                    await ElementsRepository.Add(element);
+                }
+            }
 
             _toastParameters = new ToastParameters();
             _toastParameters.Add(nameof(MyToastComponent.Title), "Успех!");
@@ -100,7 +114,11 @@ namespace AntroStop.BlazorUI.Pages
         protected override void OnInitialized()
         {
             violationsInfo = new ViolationsInfo();
+        }
 
+        private void AssignImageUrl(string imgUrl) 
+        {
+            Elements.Add( new ElementsInfo { FileName = imgUrl });
         }
     }
 }
