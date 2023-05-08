@@ -1,7 +1,14 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+<h3>Авторизация</h3>
 
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div class="mt-2 form-group">
+    <label>E-mail</label>
+    <input type="email" class="form-control" placeholder="example@mail.ru"/>
+</div>
+<div class="mt-2 form-group">
+    <label>E-mail</label>
+    <input type="password" class="form-control" placeholder="Пароль" />
+</div>
+<button type="submit" class="mt-2 btn btn-primary">Войти</button>
+<a href="/Registration">Зарегистрироваться</a>
