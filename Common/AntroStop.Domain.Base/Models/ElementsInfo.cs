@@ -10,5 +10,6 @@ namespace AntroStop.Domain.Base.Models
         public DateTimeOffset UpdatedAt { get; set; }
         public Guid ViolationID { get; set; }
         public string FileName { get; set; }
+        public string Type { get; set; }
     }
 }

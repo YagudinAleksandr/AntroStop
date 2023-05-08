@@ -38,6 +38,7 @@ namespace AntroStop.DAL.Repositories
 
             entity.Violation = violation;
             entity.Id = Guid.Empty;
+            entity.CreatedAt = entity.UpdatedAt = DateTime.UtcNow;
 
             await db.AddAsync(entity, Cancel).ConfigureAwait(false);
 
