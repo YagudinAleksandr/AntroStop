@@ -36,6 +36,7 @@ namespace AntroStop.BlazorUI
             services.AddApi<IWebUsersRepository<UsersInfo>, WebUsersRepository<UsersInfo>>("api/UsersRepository/");
             services.AddApi<IIntRepository<RolesInfo>, WebRolesRepository<RolesInfo>>("api/RolesRepository/");
             services.AddApi<IWebViolationsRepository<ViolationsInfo>, WebViolationsRepository<ViolationsInfo>>("api/ViolationsRepository/");
+            services.AddApi<IWebElementsRepository<ElementsInfo>, WebElementsRepository<ElementsInfo>>("api/ElementsRepository/");
 
             services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
