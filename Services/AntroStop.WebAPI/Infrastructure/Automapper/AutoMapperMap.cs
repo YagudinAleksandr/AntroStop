@@ -16,6 +16,8 @@ namespace AntroStop.WebAPI.Infrastructure.Automapper
                 .ReverseMap();
 
             CreateMap<ViolationsInfo, Violation>().ReverseMap();
+
+            CreateMap<ElementsInfo, Element>().ReverseMap();
         }
     }
 }

@@ -25,4 +25,8 @@
     <ProjectReference Include="..\..\UI\AntroStop.BlazorUI\AntroStop.BlazorUI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="StaticFiles\Client\" />
+  </ItemGroup>
+
 </Project>
