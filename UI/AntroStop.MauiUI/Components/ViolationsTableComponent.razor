@@ -1,0 +1,56 @@
+﻿@if(Violations==null)
+{
+    <p><em>Идёт загрузка...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Заявка</th>
+                <th>Статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var violation in Violations)
+            {
+                <tr>
+                    <td><a href="">@violation.Title</a></td>
+                    <td>
+                        @switch (violation.Status)
+                        {
+                            case "Принята":
+                                <span class="badge bg-danger">
+
+                                    Принята
+
+                                </span>
+                                break;
+                            case "Проверка":
+                                <span class="badge bg-blue">
+
+                                    Проверка
+
+                                </span>
+                                break;
+                            case "Рассмотрение":
+                                <span class="badge bg-warning">
+
+                                    Рассмотрение
+
+                                </span>
+                                break;
+                            case "Закрыта":
+                                <span class="badge bg-success">
+
+                                    Закрыта
+
+                                </span>
+                                break;
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

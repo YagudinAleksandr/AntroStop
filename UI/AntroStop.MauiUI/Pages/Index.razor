@@ -1,7 +1,49 @@
 ﻿@page "/"
+@using AntroStop.MauiUI.Components
+@using Microsoft.AspNetCore.Components.WebView.Maui;
+
 <AuthorizeView Context="Auth">
 
     <Authorized>
+        <h3>Подача заявки</h3>
+
+        <div class="form-group mt-2">
+            <LeafletMap Map="PositionMap" TileLayer="PositionTileLayer"/>
+            <button class="btn btn-warning" @onclick="ShowCurrentPosition">Определить моё местоположение</button>
+        </div>
+
+        <EditForm Model="violationsInfo" OnValidSubmit="Save">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                @foreach (var claim in Auth.User.Claims)
+                {
+                    if (claim.Type == "userID")
+                    {
+                        UserID = claim.Value;
+                    }
+                }
+
+            </div>
+            <div class="form-group mt-2">
+                 <label for="exampleInputCoordinates">Координаты <ValidationMessage For="@(() => violationsInfo.Coordinates)" /></label>
+                 <input @bind-value="violationsInfo.Coordinates" type="text" class="form-control" id="exampleInputCoordinates" placeholder="47.000000;54.26525" />
+            </div>
+            <div class="form-group mt-2">
+                 <label for="exampleInputTitle1">Заголовок <ValidationMessage For="@(() => violationsInfo.Title)" /></label>
+                 <input @bind-value="violationsInfo.Title" type="text" class="form-control" id="exampleInputTitle1" placeholder="Сброс мусора" />
+            </div>
+            <div class="form-group mt-2">
+                 <label for="exampleDescription">Описание <ValidationMessage For="@(()=>violationsInfo.Description)" /></label>
+                 <input @bind-value="violationsInfo.Description" type="text" class="form-control" id="exampleDescription" placeholder="Выброс токсичных отходов" />
+            </div>
+            <div class="form-group mt-2">
+                  <label for="exampleDescription">Файлы</label>
+                  <FilesUploadComponent OnChange="AssignImageUrl" />
+            </div>
+            <div class="form-group mt-2">
+                <button type="submit" class="btn btn-primary">Подать</button>
+            </div>
+        </EditForm>
 
     </Authorized>
 

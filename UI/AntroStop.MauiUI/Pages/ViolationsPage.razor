@@ -1,0 +1,14 @@
+﻿@page "/Violations/{userID}"
+@using AntroStop.MauiUI.Components
+
+<AuthorizeView Context="Auth">
+
+    <Authorized>
+
+        <h3>Мои заявки</h3>
+
+        <ViolationsTableComponent Violations="ViolationsList" />
+
+    </Authorized>
+
+</AuthorizeView>

@@ -48,7 +48,7 @@ namespace AntroStop.WebAPIClients.Repositories
             }
             else
             {
-                var imgUrl = Path.Combine("http://10.3.3.18:5002/", postContent);
+                var imgUrl = Path.Combine("https://10.3.3.18:5004/", postContent);
                 return imgUrl;
             }
         }
