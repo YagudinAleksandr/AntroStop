@@ -1,6 +1,49 @@
 ﻿@page "/Registration"
-<h3>Регистрация</h3>
 
-@code {
+<AuthorizeView Context="Auth">
+    <Authorized>
+        <NavLink class="nav-link" href="">
+            На главную
+        </NavLink>
+    </Authorized>
+    <NotAuthorized>
+        <h3>Регистрация</h3>
+        
+        <EditForm Model="userForRegistration" OnValidSubmit="Registration">
 
-}
+            @if (ShowRegistrationError)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @foreach(var err in Error)
+                    {
+                        <p>@err</p>
+                    }
+                </div>
+            }
+
+            <DataAnnotationsValidator />
+
+            <div class="mt-2 form-group">
+                <label>Фамилия Имя <ValidationMessage For="@(() => userForRegistration.Name)" /></label>
+                <input @bind-value="userForRegistration.Name" type="text" name="name" class="form-control" placeholder="Иванов Иван" />
+            </div>
+            <div class="mt-2 form-group">
+                <label>E-mail <ValidationMessage For="@(() => userForRegistration.Id)" /></label>
+                <input type="email" @bind-value="userForRegistration.Id" class="form-control" placeholder="example@mail.ru" />
+            </div>
+            <div class="mt-2 form-group">
+                <label>Пароль <ValidationMessage For="@(() => userForRegistration.Password)" /></label>
+                <input type="password" @bind-value="userForRegistration.Password" class="form-control" placeholder="Пароль" />
+            </div>
+            <div class="mt-2 form-group">
+                <input @bind-value="userForRegistration.IsAgree" type="checkbox" name="terms" class="custom-control-input" />
+                <label class="custom-control-label">Я соглашаюсь <a href="#">с правилами АИС AntroStop</a>.</label>
+                <ValidationMessage For="@(() => userForRegistration.IsAgree)" />
+            </div>
+            <div class="mt-2 form-group">
+                <button type="submit" class="btn btn-primary pull-right">Регистрация</button>
+            </div>
+
+        </EditForm>
+    </NotAuthorized>
+</AuthorizeView>

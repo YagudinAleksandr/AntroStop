@@ -53,7 +53,7 @@ namespace AntroStop.MauiUI.LocalServices
             var content = JsonSerializer.Serialize(userForRegistration);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
 
-            var registrationResult = await client.PostAsync("api/MappedAuth/registration", bodyContent).ConfigureAwait(false);
+            var registrationResult = await client.PostAsync("http://10.3.3.18:5002/api/MappedAuth/registration", bodyContent).ConfigureAwait(false);
             var registrationContent = await registrationResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (!registrationResult.IsSuccessStatusCode)
