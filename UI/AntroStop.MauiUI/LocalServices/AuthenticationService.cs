@@ -1,11 +1,12 @@
-﻿using AntroStop.Domain.Base.AuthModels;
+﻿using AntroStop.MauiUI.Providers;
+using AntroStop.Domain.Base.AuthModels;
 using AntroStop.Interfaces.WebRepositories;
-using AntroStop.MauiUI.Providers;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
+using System.Net.Http.Formatting;
 
 namespace AntroStop.MauiUI.LocalServices
 {
@@ -18,7 +19,7 @@ namespace AntroStop.MauiUI.LocalServices
 
         public AuthenticationService(HttpClient client, AuthenticationStateProvider authStateProvider, ILocalStorageService localStorage)
         {
-            this.client = client;
+            this.client = new HttpClient();
             this.options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             this.authStateProvider = authStateProvider;
             this.localStorage = localStorage;
@@ -26,23 +27,23 @@ namespace AntroStop.MauiUI.LocalServices
 
         public async Task<AuthResponseDto> Login(UserForAuthenticationDto userForAuthentication)
         {
-
             var content = JsonSerializer.Serialize(userForAuthentication);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var authResult = await client.PostAsync("api/MappedAuth/login", bodyContent);
-            var authContent = await authResult.Content.ReadAsStringAsync();
+            var authResult = await client.PostAsync("http://10.3.3.18:5002/api/MappedAuth/login", bodyContent).ConfigureAwait(false);
+            var authContent = await authResult.Content.ReadAsStringAsync().ConfigureAwait(false);
             var result = JsonSerializer.Deserialize<AuthResponseDto>(authContent, options);
             if (!authResult.IsSuccessStatusCode)
                 return result;
-            await localStorage.SetItemAsync("authToken", result.Token);
+            await localStorage.SetItemAsync("authToken", result.Token).ConfigureAwait(false);
             ((AuthStateProvider)authStateProvider).NotifyUserAuthentication(userForAuthentication.Id);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", result.Token);
             return new AuthResponseDto { IsAuthSuccessful = true };
+            
         }
 
         public async Task Logout()
         {
-            await localStorage.RemoveItemAsync("authToken");
+            await localStorage.RemoveItemAsync("authToken").ConfigureAwait(false);
             ((AuthStateProvider)authStateProvider).NotifyUserLogout();
             client.DefaultRequestHeaders.Authorization = null;
         }
@@ -52,8 +53,8 @@ namespace AntroStop.MauiUI.LocalServices
             var content = JsonSerializer.Serialize(userForRegistration);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
 
-            var registrationResult = await client.PostAsync("api/MappedAuth/registration", bodyContent);
-            var registrationContent = await registrationResult.Content.ReadAsStringAsync();
+            var registrationResult = await client.PostAsync("api/MappedAuth/registration", bodyContent).ConfigureAwait(false);
+            var registrationContent = await registrationResult.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             if (!registrationResult.IsSuccessStatusCode)
             {

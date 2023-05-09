@@ -1,14 +1,37 @@
 ﻿@page "/"
+<AuthorizeView Context="Auth">
 
-<h3>Авторизация</h3>
+    <Authorized>
 
-<div class="mt-2 form-group">
-    <label>E-mail</label>
-    <input type="email" class="form-control" placeholder="example@mail.ru"/>
-</div>
-<div class="mt-2 form-group">
-    <label>E-mail</label>
-    <input type="password" class="form-control" placeholder="Пароль" />
-</div>
-<button type="submit" class="mt-2 btn btn-primary">Войти</button>
-<a href="/Registration">Зарегистрироваться</a>
+    </Authorized>
+
+    <NotAuthorized>
+        <h3>Авторизация</h3>
+
+        <EditForm Model="_userForAuthentication" OnValidSubmit="ExecuteLogin">
+            @if(ShowAuthError)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Error
+                </div>
+            }
+
+            <DataAnnotationsValidator />
+
+            <div class="mt-2 form-group">
+                <label>E-mail <ValidationMessage For="@(() => _userForAuthentication.Id)" /></label>
+                <input type="email"  @bind-value="_userForAuthentication.Id" class="form-control" placeholder="example@mail.ru" />
+            </div>
+            <div class="mt-2 form-group">
+                <label>Пароль <ValidationMessage For="@(() => _userForAuthentication.Password)" /></label>
+                <input type="password" @bind-value="_userForAuthentication.Password" class="form-control" placeholder="Пароль" />
+            </div>
+            <button type="submit" class="mt-2 btn btn-primary">Войти</button>
+
+        </EditForm>
+
+        <a href="/Registration">Зарегистрироваться</a>
+    
+    </NotAuthorized>
+
+</AuthorizeView>

@@ -29,7 +29,8 @@ namespace AntroStop.MauiUI
             var services = builder.Services;
 
             //Ссылка на основной хост
-            services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5000") });
+            services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://10.3.3.18:5002") });
+            //Сервис геолокаций
             services.AddScoped<IGeolocationService, GeolocationService>();
 
             services.AddMauiBlazorWebView();

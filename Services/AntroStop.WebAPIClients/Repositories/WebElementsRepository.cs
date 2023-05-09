@@ -40,15 +40,15 @@ namespace AntroStop.WebAPIClients.Repositories
 
         public async Task<string> UploadProductImage(MultipartFormDataContent content)
         {
-            var postResult = await client.PostAsync("upload", content);
-            var postContent = await postResult.Content.ReadAsStringAsync();
+            var postResult = await client.PostAsync("upload", content).ConfigureAwait(false);
+            var postContent = await postResult.Content.ReadAsStringAsync().ConfigureAwait(false);
             if (!postResult.IsSuccessStatusCode)
             {
                 throw new ApplicationException(postContent);
             }
             else
             {
-                var imgUrl = Path.Combine("http://localhost:5000/", postContent);
+                var imgUrl = Path.Combine("http://10.3.3.18:5002/", postContent);
                 return imgUrl;
             }
         }

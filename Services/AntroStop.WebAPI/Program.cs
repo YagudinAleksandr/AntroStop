@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace AntroStop.WebAPI
@@ -19,6 +20,7 @@ namespace AntroStop.WebAPI
             .ConfigureWebHostDefaults(host =>
                 {
                     host.UseStartup<Startup>();
+                    host.UseUrls("http://10.3.3.18:5002", "https://10.3.3.18:5004");
                 });    
     }
 }

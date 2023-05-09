@@ -85,6 +85,26 @@ namespace AntroStop.WebAPI.Controllers.Base
             return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token, ID = user.ID, Name = user.Name });
         }
 
+        [HttpPost("LoginMAUI")]
+        public async Task<IActionResult> LoginMAUI(UserForAuthenticationDto userForAuthentication)
+        {
+            var user = await repository.GetByData(userForAuthentication.Id, userForAuthentication.Password);
+
+            if (user == null)
+                return BadRequest(new AuthResponseDto { ErrorMessage = "Неверный E-mail или пароль", IsAuthSuccessful = false });
+
+
+            if (!user.Status)
+                return BadRequest(new AuthResponseDto { ErrorMessage = "Ваш профиль заблокирован", IsAuthSuccessful = false });
+
+            var signingCredentials = GetSigningCredentials();
+            var claims = GetClaims(user);
+            var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
+            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
+            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token, ID = user.ID, Name = user.Name });
+        }
+
         private SigningCredentials GetSigningCredentials()
         {
             var key = Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value);
